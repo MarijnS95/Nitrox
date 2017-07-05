@@ -13,6 +13,8 @@ namespace NitroxClient.Communication
     {
         public bool Active { get; set; }
         public String PlayerId { get; set; }
+        public int PacketsSent { get; private set; } = 0;
+        public int PacketsErrored { get; private set; } = 0;
 
         private TcpClient client;
         
@@ -116,10 +118,12 @@ namespace NitroxClient.Communication
                 try
                 {
                     client.Send(packet);
+                    PacketsSent++;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error sending packet " + packet, ex);
+                    Debug.LogErrorFormat("Error sending packet {0}\n{1}", packet, ex);
+                    PacketsErrored++;
                 }
             }
         }

@@ -1,8 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using Harmony;
 using System.Reflection;
+using UnityEngine;
 using NitroxPatcher.Patches;
+using NitroxClient.MonoBehaviours;
 
 namespace NitroxPatcher
 {
@@ -31,11 +33,12 @@ namespace NitroxPatcher
             // Enabling this creates a log file on your desktop (why there?), showing the emitted IL instructions.
             HarmonyInstance.DEBUG = false;
 
+            UnityEngine.Object.FindObjectOfType<SystemsSpawner>().gameObject.AddComponent<DebugManager>();
+            // TODO: DebugManager component is awakened in a later update cycle, so log messages below are not captured by it.
             HarmonyInstance harmony = HarmonyInstance.Create("com.nitroxmod.harmony");
-
-            foreach(NitroxPatch patch in patches)
+            foreach (NitroxPatch patch in patches)
             {
-                Console.WriteLine("[NITROX] Applying " + patch.GetType());
+                Debug.Log("[NITROX] Applying " + patch.GetType());
                 patch.Patch(harmony);
             }
 

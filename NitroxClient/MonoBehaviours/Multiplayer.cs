@@ -24,6 +24,18 @@ namespace NitroxClient.MonoBehaviours
 
         private static PlayerGameObjectManager playerGameObjectManager = new PlayerGameObjectManager();
 
+        private static MultiplayerStatus status;
+        public static MultiplayerStatus Status
+        {
+            get
+            {
+                status.IsConnected = client != null && client.IsConnected();
+                status.PacketsSent = PacketSender.PacketsSent;
+                status.PacketsNotSent = PacketSender.PacketsErrored;
+                return status;
+            }
+        }
+
         public static Dictionary<Type, PacketProcessor> packetProcessorsByType = new Dictionary<Type, PacketProcessor>() {
             {typeof(PlaceBasePiece), new PlaceBasePieceProcessor() },
             {typeof(PlaceFurniture), new PlaceFurnitureProcessor() },
@@ -74,8 +86,9 @@ namespace NitroxClient.MonoBehaviours
                     {
                         PacketProcessor processor = packetProcessorsByType[packet.GetType()];
                         processor.ProcessPacket(packet);
+                        status.PacketsReceived++;
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Console.WriteLine("Error processing packet: " + packet + ": " + ex);
                     }
@@ -83,30 +96,31 @@ namespace NitroxClient.MonoBehaviours
                 else
                 {
                     Console.WriteLine("No packet processor for the given type: " + packet.GetType());
+                    status.UnknownPacketsReceived++;
                 }
             }
         }
-        
+
         public void OnConsoleCommand_mplayer(NotificationCenter.Notification n)
         {
             if (client.IsConnected())
             {
                 ErrorMessage.AddMessage("Already connected to a server");
-            } 
+            }
             else if (n?.data?.Count > 0)
             {
                 PacketSender.PlayerId = (string)n.data[0];
 
                 String ip = DEFAULT_IP_ADDRESS;
 
-                if(n.data.Count >= 2)
+                if (n.data.Count >= 2)
                 {
                     ip = (string)n.data[1];
                 }
 
                 StartMultiplayer(ip);
                 InitMonoBehaviours();
-            } 
+            }
             else
             {
                 ErrorMessage.AddMessage("Command syntax: mplayer USERNAME [SERVERIP]");
@@ -150,7 +164,7 @@ namespace NitroxClient.MonoBehaviours
                 PacketSender.Active = false;
             }
         }
-        
+
         public void InitMonoBehaviours()
         {
             if (!hasLoadedMonoBehaviors)
@@ -186,5 +200,14 @@ namespace NitroxClient.MonoBehaviours
             loadedChunks.AddChunk(owningChunk);
             chunkAwarePacketReceiver.ChunkLoaded(owningChunk);
         }
+    }
+
+    public struct MultiplayerStatus
+    {
+        public bool IsConnected;
+        public int PacketsSent;
+        public int PacketsNotSent;
+        public int PacketsReceived;
+        public int UnknownPacketsReceived;
     }
 }

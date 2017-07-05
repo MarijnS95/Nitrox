@@ -86,8 +86,11 @@
     <Compile Include="MonoBehaviours\AnimationController.cs" />
     <Compile Include="MonoBehaviours\AnimationSender.cs" />
     <Compile Include="MonoBehaviours\Chat.cs" />
+    <Compile Include="MonoBehaviours\DebugManager.cs" />
+    <Compile Include="MonoBehaviours\LogDebugGUI.cs" />
     <Compile Include="MonoBehaviours\SyncedMultiplayerObject.cs" />
     <Compile Include="MonoBehaviours\Multiplayer.cs" />
+    <Compile Include="MonoBehaviours\MultiplayerDebugGUI.cs" />
     <Compile Include="MonoBehaviours\Overrides\MultiplayerBuilder.cs" />
     <Compile Include="MonoBehaviours\PlayerMovement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
