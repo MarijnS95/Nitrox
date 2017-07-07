@@ -9,9 +9,12 @@ namespace NitroxClient.MonoBehaviours
     {
         private void Awake()
         {
-            Debug.Assert(main == null, "More than one MultiplayerDebugGUI in the scene!");
+            if (main != null)
+            {
+                Destroy(this);
+                return;
+            }
             main = this;
-            enabled = false;
         }
 
         private void Start()
@@ -67,7 +70,7 @@ namespace NitroxClient.MonoBehaviours
             GUILayout.EndArea();
         }
 
-        public static MultiplayerDebugGUI main = null;
+        private static MultiplayerDebugGUI main = null;
 
         private float packetFlowUpdateInterval = 0.15f;
 

@@ -6,11 +6,20 @@ namespace NitroxClient.MonoBehaviours
     public class LogDebugGUI : MonoBehaviour
     {
 
-        public void Start()
+        private void Awake()
+        {
+            if (main != null)
+            {
+                Destroy(this);
+                return;
+            }
+            main = this;
+            enabled = false;
+        }
+
+        private void Start()
         {
             Application.logMessageReceived += Application_logMessageReceived;
-            //enabled = false;
-            Debug.Log("Attached!");
         }
 
         private void Application_logMessageReceived(string condition, string stackTrace, LogType type)
@@ -49,6 +58,8 @@ namespace NitroxClient.MonoBehaviours
             GUILayout.EndVertical();
             GUILayout.EndArea();
         }
+
+        private static LogDebugGUI main;
 
         private StringBuilder sb = new StringBuilder();
         private Vector2 scrollPos;

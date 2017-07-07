@@ -6,6 +6,12 @@ namespace NitroxClient.MonoBehaviours
     {
         private void Awake()
         {
+            if (main != null)
+            {
+                Destroy(this);
+                return;
+            }
+            main = this;
             gameObject.AddComponent<MultiplayerDebugGUI>();
             gameObject.AddComponent<LogDebugGUI>();
         }
@@ -24,5 +30,7 @@ namespace NitroxClient.MonoBehaviours
                 if (t != null)
                     t.enabled = !t.enabled;
         }
+
+        private static DebugManager main;
     }
 }

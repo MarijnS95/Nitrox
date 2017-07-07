@@ -29,10 +29,11 @@ namespace NitroxPatcher
 
         public static void Execute()
         {
-            Console.WriteLine("Patching subnautica for nitrox");
-            // Enabling this creates a log file on your desktop (why there?), showing the emitted IL instructions.
-            HarmonyInstance.DEBUG = false;
-
+            if (gamePatched)
+            {
+                Debug.Log("[NITROX] Game was already patched...");
+                return;
+            }
             UnityEngine.Object.FindObjectOfType<SystemsSpawner>().gameObject.AddComponent<DebugManager>();
             // TODO: DebugManager component is awakened in a later update cycle, so log messages below are not captured by it.
             HarmonyInstance harmony = HarmonyInstance.Create("com.nitroxmod.harmony");
@@ -42,7 +43,10 @@ namespace NitroxPatcher
                 patch.Patch(harmony);
             }
 
-            Console.WriteLine("Completed patching for nitrox using " + Assembly.GetExecutingAssembly().FullName);
+            Debug.Log("[NITROX] Completed patching for nitrox using " + Assembly.GetExecutingAssembly().FullName);
+            gamePatched = true;
         }
+
+        private static bool gamePatched = false;
     }
 }
