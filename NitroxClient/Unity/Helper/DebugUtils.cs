@@ -7,18 +7,21 @@ namespace NitroxClient.Unity.Helper
 {
     public class DebugUtils
     {
-        public static void DumpGameObject(GameObject gameObject, string indent = "")
+        public static void DumpGameObject(GameObject gameObject, bool dumpComponents = true, string indent = "")
         {
-            Log.Info("{0}+{1}", indent, gameObject.name);
+            Log.Info("{0}+ {1}", indent, gameObject.name);
 
-            foreach (Component component in gameObject.GetComponents<Component>())
+            if (dumpComponents)
             {
-                DumpComponent(component, indent + "  ");
+                foreach (Component component in gameObject.GetComponents<Component>())
+                {
+                    DumpComponent(component, indent + "  ");
+                }
             }
 
             foreach (Transform child in gameObject.transform)
             {
-                DumpGameObject(child.gameObject, indent + "  ");
+                DumpGameObject(child.gameObject, dumpComponents, indent + "  ");
             }
         }
 

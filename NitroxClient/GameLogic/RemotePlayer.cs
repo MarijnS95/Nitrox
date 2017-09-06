@@ -1,7 +1,8 @@
-﻿using NitroxClient.MonoBehaviours;
+﻿using NitroxClient.GameLogic.Helper;
+using NitroxClient.MonoBehaviours;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Helper;
-using NitroxClient.GameLogic.Helper;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -160,6 +161,8 @@ namespace NitroxClient.GameLogic
                 if (newVehicle != null)
                 {
                     newVehicle.mainAnimator.SetBool("player_in", true);
+
+                    DebugUtils.DumpGameObject(newVehicle.gameObject, false);
 
                     Attach(newVehicle.playerPosition.transform);
                     armsController.SetWorldIKTarget(newVehicle.leftHandPlug, newVehicle.rightHandPlug);
