@@ -21,26 +21,70 @@ namespace NitroxClient.MonoBehaviours
             {
                 time = 0;
 
-                Vector3 currentPosition = Player.main.transform.position;
-                Vector3 playerVelocity = Player.main.playerController.velocity;
-
-                // IDEA: possibly only CameraRotation is of interest, because bodyrotation is extracted from that.
-                // WARN: Using camera rotation may be dangerous, when the drone is used for instance (but then movement packets shouldn't be sent either so it's not even relevant...)
-
-                Quaternion bodyRotation = MainCameraControl.main.viewModel.transform.rotation;
-                Quaternion aimingRotation = Player.main.camRoot.GetAimingTransform().rotation;
-
                 Optional<VehicleModel> vehicle = GetVehicleModel();
-                string subGuid = null;
+
+                Optional<string> opSubGuid = Optional<string>.Empty();
 
                 SubRoot currentSub = Player.main.GetCurrentSub();
 
                 if (currentSub != null)
                 {
-                    subGuid = GuidHelper.GetGuid(currentSub.gameObject);
+                    opSubGuid = Optional<string>.OfNullable(GuidHelper.GetGuid(currentSub.gameObject));
                 }
 
-                Multiplayer.Logic.Player.UpdateLocation(currentPosition, playerVelocity, bodyRotation, aimingRotation, vehicle, Optional<string>.OfNullable(subGuid));
+                Vector3 playerVelocity = Player.main.playerController.velocity;
+                Vector3 currentPosition;
+                Quaternion bodyRotation;
+                Quaternion aimingRotation;
+
+                if (vehicle.IsEmpty() && currentSub)
+                {
+                    // We're sending the local position relative to the subroot, because the player is attached to the SubRoot on remotes.
+                    // This solves all kinds of stuttering, position and position-correction issues (because the player isn't necessarlily
+                    //  walking /moving when the cyclops is moving).
+
+                    //currentPosition = currentSub.transform.InverseTransformPoint(Player.main.transform.position);
+                    //var inverseRotation = currentSub.transform.rotation.GetInverse();
+                    //bodyRotation = inverseRotation * MainCameraControl.main.viewModel.transform.rotation;
+                    //aimingRotation = inverseRotation * Player.main.camRoot.GetAimingTransform().rotation;
+
+                    //currentPosition = Player.main.transform.position - currentSub.transform.position;
+                    //var inverseRotation = currentSub.transform.rotation.GetInverse();
+                    //bodyRotation = MainCameraControl.main.viewModel.transform.rotation;
+                    //aimingRotation = Player.main.camRoot.GetAimingTransform().rotation;
+
+                    // Subtract vehicle velocity to get the pure local velocity.
+                    //playerVelocity -= currentSub.GetComponent<Rigidbody>().velocity;
+
+                    Player.main.transform.parent = currentSub.transform;
+                    currentPosition = Player.main.transform.position;
+                    bodyRotation = MainCameraControl.main.viewModel.transform.rotation;
+                    aimingRotation = Player.main.camRoot.GetAimingTransform().rotation;
+                    Player.main.transform.parent = null;
+                }
+                else
+                {
+                    currentPosition = Player.main.transform.position;
+                    bodyRotation = MainCameraControl.main.viewModel.transform.rotation;
+                    aimingRotation = Player.main.camRoot.GetAimingTransform().rotation;
+                }
+                Multiplayer.Main.GetComponent<DebugGui>()["player"] = () =>
+                {
+                    GUILayout.BeginVertical("box");
+                    DebugGui.FormatLabel("Local player");
+                    DebugGui.FormatLabel("body: Position: {0}, Rotation: {1}", Player.main.transform.position, Player.main.transform.rotation);
+                    DebugGui.FormatLabel("body_local: Position: {0}, Rotation: {1}", Player.main.transform.localPosition, Player.main.transform.localRotation);
+                    DebugGui.FormatLabel("playerVelocity: {0}", playerVelocity);
+                    if (Player.main.transform.parent)
+                    {
+                        DebugGui.FormatLabel("parent: Position: {0}, Rotation: {1}", Player.main.transform.parent.localPosition, Player.main.transform.parent.localRotation);
+                        DebugGui.FormatLabel("parent_diff: Position: {0}, Rotation: {1}", Player.main.transform.position - Player.main.transform.parent.position,
+                            Player.main.transform.rotation * Player.main.transform.parent.rotation.GetInverse());
+                    }
+                    GUILayout.EndVertical();
+                };
+
+                Multiplayer.Logic.Player.UpdateLocation(currentPosition, playerVelocity, bodyRotation, aimingRotation, vehicle, opSubGuid);
             }
         }
 

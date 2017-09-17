@@ -2,6 +2,7 @@
 using NitroxClient.MonoBehaviours;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Helper;
+using NitroxModel.Logger;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -61,19 +62,23 @@ namespace NitroxClient.GameLogic
 
         public void Attach(Transform transform, bool keepWorldTransform = false)
         {
+            Log.Debug("Setting parent from {0} to {1}", Body.transform.parent, transform);
             Body.transform.parent = transform;
 
             if (!keepWorldTransform)
             {
+                Log.Debug("And killing local transform.");
                 UWE.Utils.ZeroTransform(Body);
             }
         }
 
         public void Detach()
         {
+            Log.Debug("Unsetting parent {0}", Body.transform.parent);
             Body.transform.parent = null;
         }
 
+        [NitroxReloader.ReloadableMethod]
         public void UpdatePosition(Vector3 position, Vector3 velocity, Quaternion bodyRotation, Quaternion aimingRotation, Optional<string> opSubGuid)
         {
             Body.SetActive(true);
@@ -90,8 +95,34 @@ namespace NitroxClient.GameLogic
             SetPilotingChair(null);
             SetSubRoot(subRoot);
 
-            RigidBody.velocity = AnimationController.Velocity = MovementHelper.GetCorrectedVelocity(position, velocity, Body, PlayerMovement.BROADCAST_INTERVAL);
-            RigidBody.angularVelocity = MovementHelper.GetCorrectedAngularVelocity(bodyRotation, Vector3.zero, Body, PlayerMovement.BROADCAST_INTERVAL);
+            //Log.Debug("sr: {0}, p: {1}, v: {2}, br: {3}", subRoot != null, position, velocity, bodyRotation);
+            Multiplayer.Main.GetComponent<DebugGui>()["remoteplayer_" + PlayerId] = () =>
+            {
+                GUILayout.BeginVertical("box");
+                DebugGui.FormatLabel("Remote player:");
+                DebugGui.FormatLabel("SubRoot: {0}", subRoot);
+                DebugGui.FormatLabel("remote: Position: {0}, Rotation: {1}, Velocity: {2}", position, bodyRotation, velocity);
+                DebugGui.FormatLabel("body: Position: {0}, Rotation: {1}", Body.transform.position, Body.transform.rotation);
+                DebugGui.FormatLabel("body_local: Position: {0}, Rotation: {1}, Scale: {2}", Body.transform.localPosition, Body.transform.localRotation, Body.transform.localScale);
+                if (Body.transform.parent)
+                {
+                    DebugGui.FormatLabel("parent: Position: {0}, Rotation: {1}", Body.transform.parent.localPosition, Body.transform.parent.localRotation);
+                    DebugGui.FormatLabel("parent_diff: Position: {0}, Rotation: {1}", Body.transform.position - Body.transform.parent.position,
+                        Body.transform.rotation * Body.transform.parent.rotation.GetInverse());
+                }
+                GUILayout.EndVertical();
+            };
+
+            //if (subRoot == null)
+            //{
+            RigidBody.velocity = AnimationController.Velocity = MovementHelper.GetCorrectedVelocity(position, velocity, Body, PlayerMovement.BROADCAST_INTERVAL, subRoot != null);
+            RigidBody.angularVelocity = MovementHelper.GetCorrectedAngularVelocity(bodyRotation, Vector3.zero, Body, PlayerMovement.BROADCAST_INTERVAL, subRoot != null);
+            //}
+            //else
+            //{
+            //    Body.transform.localPosition = position;
+            //    Body.transform.localRotation = bodyRotation;
+            //}
 
             AnimationController.AimingRotation = aimingRotation;
             AnimationController.UpdatePlayerAnimations = true;
@@ -123,7 +154,8 @@ namespace NitroxClient.GameLogic
                     mpCyclops.CurrentPlayer = null;
                     mpCyclops.Exit();
                 }
-                RigidBody.isKinematic = AnimationController["cyclops_steering"] = (newPilotingChair != null);
+
+                AnimationController.UpdatePlayerAnimations = RigidBody.isKinematic = AnimationController["cyclops_steering"] = (newPilotingChair != null);
             }
         }
 
@@ -168,7 +200,7 @@ namespace NitroxClient.GameLogic
                     newVehicle.GetComponent<MultiplayerVehicleControl<Vehicle>>().Enter();
                 }
 
-                RigidBody.isKinematic = newVehicle != null;
+                RigidBody.isKinematic = AnimationController.UpdatePlayerAnimations = newVehicle != null;
 
                 Vehicle = newVehicle;
 

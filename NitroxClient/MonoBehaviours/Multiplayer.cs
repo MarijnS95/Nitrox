@@ -164,6 +164,7 @@ namespace NitroxClient.MonoBehaviours
                 gameObject.AddComponent<PlayerStatsBroadcaster>();
                 gameObject.AddComponent<AnimationSender>();
                 gameObject.AddComponent<EntityPositionBroadcaster>();
+                gameObject.AddComponent<DebugGui>();
 
                 hasLoadedMonoBehaviors = true;
             }

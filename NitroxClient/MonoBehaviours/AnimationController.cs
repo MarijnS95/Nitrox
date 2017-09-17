@@ -50,7 +50,11 @@ namespace NitroxClient.MonoBehaviours
         public bool this[string name]
         {
             get { return animator.GetBool(name); }
-            set { animator.SetBool(name, value); }
+            set
+            {
+                gameObject.SetActive(true);
+                animator.SetBool(name, value);
+            }
         }
 
         internal void SetFloat(string name, float value)

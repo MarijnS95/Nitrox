@@ -31,17 +31,27 @@ namespace NitroxClient.GameLogic
             iTween.Stop(go);
         }
 
-        public static Vector3 GetCorrectedVelocity(Vector3 remotePosition, Vector3 remoteVelocity, GameObject gameObject, float correctionTime)
+        public static Vector3 GetCorrectedVelocity(Vector3 remotePosition, Vector3 remoteVelocity, GameObject gameObject, float correctionTime, bool local = false)
         {
-            Vector3 difference = (remotePosition - gameObject.transform.position);
+            var position = local ? gameObject.transform.localPosition : gameObject.transform.position;
+            Vector3 difference = remotePosition - position;
             Vector3 velocityToMakeUpDifference = difference / correctionTime;
 
             float distance = difference.magnitude;
+            if (local)
+                Console.WriteLine("Local diff {0}", distance);
 
             if (distance > 20f)
             {
                 // This should be a one-off teleport.
-                gameObject.transform.position = remotePosition;
+                if (local)
+                {
+                    gameObject.transform.localPosition = remotePosition;
+                }
+                else
+                {
+                    gameObject.transform.position = remotePosition;
+                }
             }
             //overcorrections can cause jitter when standing still.
             else if (distance > 0.001f)
@@ -53,9 +63,10 @@ namespace NitroxClient.GameLogic
             return remoteVelocity;
         }
 
-        public static Vector3 GetCorrectedAngularVelocity(Quaternion remoteRotation, Vector3 angularVelocty, GameObject gameObject, float correctionTime)
+        public static Vector3 GetCorrectedAngularVelocity(Quaternion remoteRotation, Vector3 angularVelocty, GameObject gameObject, float correctionTime, bool local = false)
         {
-            Quaternion delta = remoteRotation * gameObject.transform.rotation.GetInverse();
+            var rotation = local ? gameObject.transform.localRotation : gameObject.transform.rotation;
+            Quaternion delta = remoteRotation * rotation.GetInverse();
 
             float angle;
             Vector3 axis;
