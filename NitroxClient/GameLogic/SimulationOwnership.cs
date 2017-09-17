@@ -8,21 +8,21 @@ namespace NitroxClient.GameLogic
     public class SimulationOwnership
     {
         private PacketSender packetSender;
-        private Dictionary<String, String> ownedGuidsToPlayer;
-        private HashSet<String> requestedGuids;
+        private Dictionary<Guid, String> ownedGuidsToPlayer;
+        private HashSet<Guid> requestedGuids;
 
         public SimulationOwnership(PacketSender packetSender)
         {
             this.packetSender = packetSender;
-            this.ownedGuidsToPlayer = new Dictionary<String, String>();
-            this.requestedGuids = new HashSet<String>();
+            this.ownedGuidsToPlayer = new Dictionary<Guid, String>();
+            this.requestedGuids = new HashSet<Guid>();
         }
-         
-        public bool HasOwnership(String guid)
+
+        public bool HasOwnership(Guid guid)
         {
             String owningPlayerId;
 
-            if(ownedGuidsToPlayer.TryGetValue(guid, out owningPlayerId))
+            if (ownedGuidsToPlayer.TryGetValue(guid, out owningPlayerId))
             {
                 return owningPlayerId == packetSender.PlayerId;
             }
@@ -30,17 +30,17 @@ namespace NitroxClient.GameLogic
             return false;
         }
 
-        public void TryToRequestOwnership(String guid)
+        public void TryToRequestOwnership(Guid guid)
         {
-            if(!ownedGuidsToPlayer.ContainsKey(guid) && !requestedGuids.Contains(guid))
+            if (!ownedGuidsToPlayer.ContainsKey(guid) && !requestedGuids.Contains(guid))
             {
                 SimulationOwnershipRequest ownershipRequest = new SimulationOwnershipRequest(packetSender.PlayerId, guid);
                 packetSender.Send(ownershipRequest);
                 requestedGuids.Add(guid);
-            }            
+            }
         }
 
-        public void AddOwnedGuid(String guid, String playerId)
+        public void AddOwnedGuid(Guid guid, String playerId)
         {
             ownedGuidsToPlayer[guid] = playerId;
         }

@@ -1,9 +1,9 @@
-﻿using System;
 using NitroxClient.Communication;
-using NitroxModel.Packets;
-using UnityEngine;
 using NitroxClient.GameLogic.Helper;
 using NitroxModel.Logger;
+using NitroxModel.Packets;
+using System;
+using UnityEngine;
 
 namespace NitroxClient.GameLogic
 {
@@ -18,15 +18,14 @@ namespace NitroxClient.GameLogic
 
         public void FabricatorCrafingStarted(GameObject crafter, TechType techType, float duration)
         {
-            String crafterGuid = GuidHelper.GetGuid(crafter);
+            Guid crafterGuid = GuidHelper.GetGuid(crafter);
             FabricatorBeginCrafting fabricatorBeginCrafting = new FabricatorBeginCrafting(packetSender.PlayerId, crafterGuid, techType, duration);
             packetSender.Send(fabricatorBeginCrafting);
         }
 
         public void FabricatorItemPickedUp(GameObject gameObject, TechType techType)
         {
-            String crafterGuid = GuidHelper.GetGuid(gameObject);
-
+            Guid crafterGuid = GuidHelper.GetGuid(gameObject);
             FabricatorItemPickup fabricatorItemPickup = new FabricatorItemPickup(packetSender.PlayerId, crafterGuid, techType);
             packetSender.Send(fabricatorItemPickup);
             Log.Debug(fabricatorItemPickup);

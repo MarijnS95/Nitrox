@@ -27,10 +27,10 @@ namespace NitroxClient.GameLogic
         {
             this.packetSender = packetSender;
         }
-        
+
         public void BeginCrafting(GameObject constructor, TechType techType, float duration)
         {
-            String constructorGuid = GuidHelper.GetGuid(constructor);
+            Guid constructorGuid = GuidHelper.GetGuid(constructor);
 
             Log.Debug("Building item from constructor with uuid: " + constructorGuid);
 
@@ -41,7 +41,7 @@ namespace NitroxClient.GameLogic
                 GameObject constructedObject = (GameObject)opConstructedObject.Get();
 
                 List<InteractiveChildObjectIdentifier> childIdentifiers = ExtractGuidsOfInteractiveChildren(constructedObject);
-                String constructedObjectGuid = GuidHelper.GetGuid(constructedObject);
+                Guid constructedObjectGuid = GuidHelper.GetGuid(constructedObject);
 
                 ConstructorBeginCrafting beginCrafting = new ConstructorBeginCrafting(packetSender.PlayerId, constructorGuid, constructedObjectGuid, techType, duration, childIdentifiers);
                 packetSender.Send(beginCrafting);
@@ -64,7 +64,7 @@ namespace NitroxClient.GameLogic
 
                 foreach (Component component in components)
                 {
-                    String guid = GuidHelper.GetGuid(component.gameObject);
+                    Guid guid = GuidHelper.GetGuid(component.gameObject);
                     String componentName = component.gameObject.GetFullName();
                     String relativePathName = componentName.Replace(constructedObjectsName, "");
 

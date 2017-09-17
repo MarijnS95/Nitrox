@@ -78,7 +78,7 @@ namespace NitroxClient.Communication.Packets.Processors
             player.animationController.UpdatePlayerAnimations = false;
         }
 
-        private void CreateVehicleAt(RemotePlayer player, TechType techType, String guid, Vector3 position, Quaternion rotation)
+        private void CreateVehicleAt(RemotePlayer player, TechType techType, Guid guid, Vector3 position, Quaternion rotation)
         {
             if (techType == TechType.Cyclops)
             {
@@ -99,7 +99,7 @@ namespace NitroxClient.Communication.Packets.Processors
             }
         }
 
-        private void OnVehiclePrefabLoaded(RemotePlayer player, GameObject prefab, string guid, Vector3 spawnPosition, Quaternion spawnRotation)
+        private void OnVehiclePrefabLoaded(RemotePlayer player, GameObject prefab, Guid guid, Vector3 spawnPosition, Quaternion spawnRotation)
         {
             // Partially copied from SubConsoleCommand.OnSubPrefabLoaded
             GameObject gameObject = Utils.SpawnPrefabAt(prefab, null, spawnPosition);

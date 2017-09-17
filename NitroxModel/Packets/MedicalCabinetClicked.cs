@@ -6,12 +6,12 @@ namespace NitroxModel.Packets
     [Serializable]
     public class MedicalCabinetClicked : PlayerActionPacket
     {
-        public String Guid { get; }
+        public Guid Guid { get; }
         public bool DoorOpen { get; }
         public bool HasMedKit { get; }
         public float NextSpawnTime { get; }
 
-        public MedicalCabinetClicked(String playerId, String guid, Vector3 actionPosition, bool doorOpen, bool hasMedKit, float nextSpawnTime) : base(playerId, actionPosition)
+        public MedicalCabinetClicked(String playerId, Guid guid, Vector3 actionPosition, bool doorOpen, bool hasMedKit, float nextSpawnTime) : base(playerId, actionPosition)
         {
             this.Guid = guid;
             this.DoorOpen = doorOpen;

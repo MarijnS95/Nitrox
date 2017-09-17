@@ -13,7 +13,7 @@ namespace NitroxPatcher.Patches
 
         public static void Postfix(CyclopsSilentRunningAbilityButton __instance)
         {
-            String guid = GuidHelper.GetGuid(__instance.subRoot.gameObject);
+            Guid guid = GuidHelper.GetGuid(__instance.subRoot.gameObject);
             Multiplayer.Logic.Cyclops.BeginSilentRunning(guid);
         }
 

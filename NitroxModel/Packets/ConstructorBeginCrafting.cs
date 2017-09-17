@@ -7,13 +7,13 @@ namespace NitroxModel.Packets
     [Serializable]
     public class ConstructorBeginCrafting : AuthenticatedPacket
     {
-        public String ConstructorGuid { get; protected set; }
-        public String ConstructedItemGuid { get; protected set; }
+        public Guid ConstructorGuid { get; protected set; }
+        public Guid ConstructedItemGuid { get; protected set; }
         public TechType TechType { get; }
         public float Duration { get; protected set; }
-        public List<InteractiveChildObjectIdentifier> InteractiveChildIdentifiers { get; private set; }
+        public List<InteractiveChildObjectIdentifier> InteractiveChildIdentifiers { get; }
 
-        public ConstructorBeginCrafting(String playerId, String constructorGuid, String constructedItemGuid, TechType techType, float duration, List<InteractiveChildObjectIdentifier> interactiveChildIdentifiers) : base(playerId)
+        public ConstructorBeginCrafting(String playerId, Guid constructorGuid, Guid constructedItemGuid, TechType techType, float duration, List<InteractiveChildObjectIdentifier> interactiveChildIdentifiers) : base(playerId)
         {
             this.ConstructorGuid = constructorGuid;
             this.ConstructedItemGuid = constructedItemGuid;

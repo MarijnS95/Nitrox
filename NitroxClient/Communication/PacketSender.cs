@@ -30,7 +30,7 @@ namespace NitroxClient.Communication
             Send(auth);
         }
 
-        public void UpdatePlayerLocation(Vector3 location, Vector3 velocity, Quaternion bodyRotation, Quaternion aimingRotation, Optional<VehicleModel> opVehicle, Optional<String> opSubGuid)
+        public void UpdatePlayerLocation(Vector3 location, Vector3 velocity, Quaternion bodyRotation, Quaternion aimingRotation, Optional<VehicleModel> opVehicle, Optional<Guid> opSubGuid)
         {
             Movement movement;
 

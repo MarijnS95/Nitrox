@@ -54,12 +54,12 @@ namespace NitroxServer.GameLogic
             {
                 int totalEscapePods = escapePods.Count;
 
-                EscapePodModel escapePod = new EscapePodModel("escapePod" + totalEscapePods,
+                EscapePodModel escapePod = new EscapePodModel(Guid.NewGuid(),
                                                               new Vector3(-112.2f + (ESCAPE_POD_X_OFFSET * totalEscapePods), 0.0f, -322.6f),
-                                                              "escapePodFab" + totalEscapePods,
-                                                              "escapePodMedFab" + totalEscapePods,
-                                                              "escapePodStorageFab" + totalEscapePods,
-                                                              "escapePodRadioFab" + totalEscapePods);
+                                                              Guid.NewGuid(),
+                                                              Guid.NewGuid(),
+                                                              Guid.NewGuid(),
+                                                              Guid.NewGuid());
                 escapePods.Add(escapePod);
 
                 return escapePod;

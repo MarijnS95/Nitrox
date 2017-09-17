@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace NitroxServer.GameLogic
 {
     public class SimulationOwnership
     {
-        Dictionary<String, Player> guidsByPlayer = new Dictionary<String, Player>();
-        
+        Dictionary<Guid, Player> guidsByPlayer = new Dictionary<Guid, Player>();
+
         //TODO: redistribute upon disconnect
 
-        public bool TryToAquireOwnership(String guid, Player player)
+        public bool TryToAquireOwnership(Guid guid, Player player)
         {
-            lock(guidsByPlayer)
+            lock (guidsByPlayer)
             {
                 Player owningPlayer;
 
                 if (guidsByPlayer.TryGetValue(guid, out owningPlayer))
                 {
-                    if(owningPlayer != player)
+                    if (owningPlayer != player)
                     {
                         return false;
                     }

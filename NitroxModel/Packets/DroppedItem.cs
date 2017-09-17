@@ -7,13 +7,13 @@ namespace NitroxModel.Packets
     [Serializable]
     public class DroppedItem : PlayerActionPacket
     {
-        public String Guid { get; }
-        public Optional<String> WaterParkGuid { get; }
+        public Guid Guid { get; }
+        public Optional<Guid> WaterParkGuid { get; }
         public TechType TechType { get; }
         public Vector3 ItemPosition { get; }
         public byte[] Bytes { get; }
 
-        public DroppedItem(String playerId, String guid, Optional<String> waterParkGuid, TechType techType, Vector3 itemPosition, byte[] bytes) : base(playerId, itemPosition)
+        public DroppedItem(String playerId, Guid guid, Optional<Guid> waterParkGuid, TechType techType, Vector3 itemPosition, byte[] bytes) : base(playerId, itemPosition)
         {
             this.Guid = guid;
             this.WaterParkGuid = waterParkGuid;

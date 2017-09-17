@@ -1,10 +1,9 @@
 ﻿using NitroxClient.Communication.Packets.Processors.Abstract;
+using NitroxClient.GameLogic.Helper;
 using NitroxClient.MonoBehaviours.Overrides;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Helper;
-using NitroxClient.GameLogic.Helper;
 using NitroxModel.Packets;
-using System;
 using System.Reflection;
 using UnityEngine;
 

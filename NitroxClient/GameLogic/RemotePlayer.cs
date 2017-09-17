@@ -1,7 +1,8 @@
-﻿using NitroxClient.MonoBehaviours;
+﻿using NitroxClient.GameLogic.Helper;
+using NitroxClient.MonoBehaviours;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Helper;
-using NitroxClient.GameLogic.Helper;
+using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -73,7 +74,7 @@ namespace NitroxClient.GameLogic
             body.transform.parent = null;
         }
 
-        public void UpdatePosition(Vector3 position, Vector3 velocity, Quaternion bodyRotation, Quaternion aimingRotation, Optional<string> opSubGuid)
+        public void UpdatePosition(Vector3 position, Vector3 velocity, Quaternion bodyRotation, Quaternion aimingRotation, Optional<Guid> opSubGuid)
         {
             body.SetActive(true);
 

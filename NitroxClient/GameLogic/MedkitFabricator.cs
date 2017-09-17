@@ -1,9 +1,9 @@
 ﻿using NitroxClient.Communication;
-using NitroxModel.Packets;
+using NitroxClient.GameLogic.Helper;
 using NitroxModel.Helper;
+using NitroxModel.Packets;
 using System;
 using UnityEngine;
-using NitroxClient.GameLogic.Helper;
 
 namespace NitroxClient.GameLogic
 {
@@ -19,7 +19,7 @@ namespace NitroxClient.GameLogic
         public void Clicked(MedicalCabinet medicalCabinet)
         {
             Vector3 actionPosition = medicalCabinet.gameObject.transform.position;
-            String guid = GuidHelper.GetGuid(medicalCabinet.gameObject);
+            Guid guid = GuidHelper.GetGuid(medicalCabinet.gameObject);
             bool doorOpen = (bool)medicalCabinet.ReflectionGet("doorOpen");
 
             MedicalCabinetClicked cabinetClicked = new MedicalCabinetClicked(packetSender.PlayerId, guid, actionPosition, doorOpen, medicalCabinet.hasMedKit, medicalCabinet.timeSpawnMedKit);

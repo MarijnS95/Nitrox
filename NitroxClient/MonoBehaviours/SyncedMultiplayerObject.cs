@@ -18,7 +18,7 @@ namespace NitroxClient.MonoBehaviours
             {
                 time = 0;
 
-                String guid = GuidHelper.GetGuid(this.gameObject);
+                Guid guid = GuidHelper.GetGuid(this.gameObject);
                 Vector3 currentPosition = this.gameObject.transform.position;
                 Quaternion rotation = this.gameObject.transform.rotation;
 

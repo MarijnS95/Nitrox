@@ -7,15 +7,17 @@ namespace NitroxModel.DataStructures.GameLogic
     [Serializable]
     public class EscapePodModel
     {
-        public String Guid { get; }
+        // TODO: Technically these are not filled with real Guid's...
+        public Guid Guid { get; }
         public Vector3 Location { get; }
-        public String FabricatorGuid { get; }
-        public String MedicalFabricatorGuid { get; }
-        public String StorageContainerGuid { get; }
-        public String RadioGuid { get; }
+        public Guid FabricatorGuid { get; }
+        public Guid MedicalFabricatorGuid { get; }
+        public Guid StorageContainerGuid { get; }
+        public Guid RadioGuid { get; }
+
         public List<String> AssignedPlayers { get; }
 
-        public EscapePodModel(String guid, Vector3 location, String fabricatorGuid, String medicalFabricatorGuid, String storageContainerGuid, String radioGuid) : base()
+        public EscapePodModel(Guid guid, Vector3 location, Guid fabricatorGuid, Guid medicalFabricatorGuid, Guid storageContainerGuid, Guid radioGuid) : base()
         {
             this.Guid = guid;
             this.Location = location;

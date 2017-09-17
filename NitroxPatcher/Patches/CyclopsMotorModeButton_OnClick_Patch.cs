@@ -35,7 +35,7 @@ namespace NitroxPatcher.Patches
             if (__state)
             {
                 SubRoot cyclops = (SubRoot)__instance.ReflectionGet("subRoot");
-                String guid = GuidHelper.GetGuid(cyclops.gameObject);
+                Guid guid = GuidHelper.GetGuid(cyclops.gameObject);
                 Multiplayer.Logic.Cyclops.ChangeEngineMode(guid, __instance.motorModeIndex);
             }
         }

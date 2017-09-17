@@ -15,10 +15,10 @@ namespace NitroxClient.Communication.Packets.Processors
     {
         public static bool SURPRESS_ESCAPE_POD_AWAKE_METHOD = false;
 
-        private String myEscapePodGuid;
+        private Guid myEscapePodGuid;
         private PacketSender packetSender;
         private Vector3 playerSpawnRelativeToEscapePodPosition = new Vector3(0.9f, 2.1f, 0);
-        private Dictionary<String, GameObject> escapePodsByGuid = new Dictionary<String, GameObject>();
+        private Dictionary<Guid, GameObject> escapePodsByGuid = new Dictionary<Guid, GameObject>();
 
         public BroadcastEscapePodsProcessor(PacketSender packetSender)
         {

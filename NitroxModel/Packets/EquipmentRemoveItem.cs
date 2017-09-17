@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace NitroxModel.Packets
@@ -6,11 +6,11 @@ namespace NitroxModel.Packets
     [Serializable]
     public class EquipmentRemoveItem : PlayerActionPacket
     {
-        public String OwnerGuid { get; private set; }
+        public Guid OwnerGuid { get; private set; }
         public String Slot { get; private set; }
-        public String ItemGuid { get; private set; }
+        public Guid ItemGuid { get; private set; }
 
-        public EquipmentRemoveItem(String playerId, String ownerGuid, String slot, String itemGuid, Vector3 ownerPosition) : base(playerId, ownerPosition)
+        public EquipmentRemoveItem(String playerId, Guid ownerGuid, String slot, Guid itemGuid, Vector3 ownerPosition) : base(playerId, ownerPosition)
         {
             this.OwnerGuid = ownerGuid;
             this.Slot = slot;

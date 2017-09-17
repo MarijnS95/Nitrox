@@ -5,9 +5,9 @@ namespace NitroxModel.Packets
     [Serializable]
     public class CyclopsActivateHorn : AuthenticatedPacket
     {
-        public String Guid { get; }
+        public Guid Guid { get; }
 
-        public CyclopsActivateHorn(String playerId, String guid) : base(playerId)
+        public CyclopsActivateHorn(String playerId, Guid guid) : base(playerId)
         {
             this.Guid = guid;
         }

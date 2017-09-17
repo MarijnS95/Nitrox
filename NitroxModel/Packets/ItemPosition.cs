@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace NitroxModel.Packets
@@ -8,10 +8,9 @@ namespace NitroxModel.Packets
     {
         public Vector3 Position { get; }
         public Quaternion Rotation { get; }
+        public Guid Guid { get; }
 
-        public String Guid { get; }
-
-        public ItemPosition(String playerId, String guid, Vector3 position, Quaternion rotation) : base(playerId, position)
+        public ItemPosition(String playerId, Guid guid, Vector3 position, Quaternion rotation) : base(playerId, position)
         {
             this.Guid = guid;
             this.Position = position;

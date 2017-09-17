@@ -1,4 +1,6 @@
-﻿namespace ClientTester.Commands.DefaultCommands
+﻿using System;
+
+namespace ClientTester.Commands.DefaultCommands
 {
     public class PickupCommand : NitroxCommand
     {
@@ -13,7 +15,7 @@
         {
             assertMinimumArgs(args, 4);
 
-            client.Logic.Item.PickedUp(CommandManager.GetVectorFromArgs(args, 1), args[0], "");
+            client.Logic.Item.PickedUp(CommandManager.GetVectorFromArgs(args, 1), new Guid(args[0]), "");
         }
     }
 }

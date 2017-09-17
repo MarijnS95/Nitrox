@@ -5,10 +5,10 @@ namespace NitroxModel.Packets
 {
     [Serializable]
     public class DeconstructionBegin : PlayerActionPacket
-    { 
-        public String Guid { get; }
+    {
+        public Guid Guid { get; }
 
-        public DeconstructionBegin(String playerId, Vector3 itemPosition, String guid) : base(playerId, itemPosition)
+        public DeconstructionBegin(String playerId, Vector3 itemPosition, Guid guid) : base(playerId, itemPosition)
         {
             this.Guid = guid;
         }

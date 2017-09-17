@@ -5,9 +5,9 @@ namespace NitroxModel.Packets
     [Serializable]
     public class CyclopsBeginSilentRunning : AuthenticatedPacket
     {
-        public String Guid { get; }
+        public Guid Guid { get; }
 
-        public CyclopsBeginSilentRunning(String playerId, String guid) : base(playerId)
+        public CyclopsBeginSilentRunning(String playerId, Guid guid) : base(playerId)
         {
             this.Guid = guid;
         }
