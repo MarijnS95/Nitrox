@@ -18,8 +18,6 @@ namespace NitroxPatcher
 
         public static void Execute()
         {
-            Log.SetLevel(Log.LogLevel.ConsoleInfo | Log.LogLevel.ConsoleDebug | Log.LogLevel.InGameMessages);
-
             if (patches != null)
             {
                 Log.Warn("Patches have already been detected! Call Apply or Restore instead.");
