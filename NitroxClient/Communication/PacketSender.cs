@@ -1,27 +1,37 @@
 ﻿using NitroxClient.MonoBehaviours;
+using NitroxModel.DataStructures.PacketModel;
 using NitroxModel.DataStructures.ServerModel;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Logger;
+using NitroxModel.PacketModel;
 using NitroxModel.Packets;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NitroxClient.Communication
 {
     public class PacketSender
     {
-        public bool Active { get; set; }
+        public bool Active { get; set; } = false;
         public String PlayerId { get; set; }
 
         private TcpClient client;
-        private HashSet<Type> suppressedPacketsTypes;
+        private readonly HashSet<Type> suppressedPacketsTypes = new HashSet<Type>();
+        private readonly Dictionary<Type, LastPacket> lastPackets;
 
         public PacketSender(TcpClient client)
         {
             this.client = client;
-            this.Active = false;
-            this.suppressedPacketsTypes = new HashSet<Type>();
+            lastPackets = typeof(Packet).Assembly
+                .GetTypes()
+                .Where(t =>
+                    !t.IsAbstract
+                    && t.IsClass
+                    && typeof(Packet).IsAssignableFrom(t)
+                    && Attribute.IsDefined(t, typeof(RatelimitedAttribute)))
+                .ToDictionary(t => t, t => new LastPacket(((RatelimitedAttribute)Attribute.GetCustomAttribute(t, typeof(RatelimitedAttribute))).SecondsPerPacket));
         }
 
         public void Authenticate()
@@ -53,20 +63,38 @@ namespace NitroxClient.Communication
             Send(animEvent);
         }
 
+        private void SendImmediately(Packet packet)
+        {
+            try
+            {
+                client.Send(packet);
+            }
+            catch (Exception ex)
+            {
+                Log.InGame($"Error sending {packet}: {ex.Message}");
+                Log.Error("Error sending packet " + packet, ex);
+            }
+        }
+
         public void Send(Packet packet)
         {
             if (Active && !suppressedPacketsTypes.Contains(packet.GetType()))
             {
-                try
+                LastPacket lp;
+                if (lastPackets.TryGetValue(packet.GetType(), out lp))
                 {
-                    client.Send(packet);
+                    lp.UpdateAndSend(packet, SendImmediately);
                 }
-                catch (Exception ex)
+                else
                 {
-                    Log.InGame($"Error sending {packet}: {ex.Message}");
-                    Log.Error("Error sending packet " + packet, ex);
+                    SendImmediately(packet);
                 }
             }
+        }
+
+        public void UpdateRatelimitedPackets()
+        {
+            lastPackets.Values.ForEach(limiter => limiter.Send(SendImmediately));
         }
 
         public PacketSuppression<T> Suppress<T>()

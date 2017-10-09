@@ -47,6 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataStructures\PacketModel\LastPacket.cs" />
+    <Compile Include="DataStructures\PacketModel\RatelimitedAttribute.cs" />
     <Compile Include="DataStructures\Chunk.cs" />
     <Compile Include="DataStructures\GameLogic\EscapePodModel.cs" />
     <Compile Include="DataStructures\GameLogic\PowerType.cs" />

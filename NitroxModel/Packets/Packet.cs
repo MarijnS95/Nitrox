@@ -69,5 +69,10 @@ namespace NitroxModel.Packets
 
             return packetData;
         }
+
+        public virtual bool TargetEquals(Packet otherPacket)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

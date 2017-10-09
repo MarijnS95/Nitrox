@@ -1,7 +1,7 @@
-﻿using NitroxModel.Packets;
-using NitroxModel.Tcp;
+﻿using NitroxClient.MonoBehaviours;
 using NitroxModel.Logger;
-using NitroxClient.MonoBehaviours;
+using NitroxModel.Packets;
+using NitroxModel.Tcp;
 using System;
 using System.Net;
 using System.Net.Sockets;
@@ -10,10 +10,11 @@ namespace NitroxClient.Communication
 {
     public class TcpClient
     {
-        private ChunkAwarePacketReceiver packetReceiver;
         private const int port = 11000;
+
+        private ChunkAwarePacketReceiver packetReceiver;
         private Connection connection;
-        
+
         public TcpClient(ChunkAwarePacketReceiver packetManager)
         {
             this.packetReceiver = packetManager;
@@ -32,7 +33,7 @@ namespace NitroxClient.Communication
 
                 if (connection.Open)
                 {
-                    connection.BeginReceive(new AsyncCallback(DataReceived));
+                    connection.BeginReceive(DataReceived);
                 }
             }
             catch (Exception e)
@@ -48,20 +49,21 @@ namespace NitroxClient.Communication
             Multiplayer.RemoveAllOtherPlayers();
             Log.InGame("Disconnected from server.");
         }
-        
+
         private void DataReceived(IAsyncResult ar)
         {
             Connection connection = (Connection)ar.AsyncState;
 
             foreach (Packet packet in connection.GetPacketsFromRecievedData(ar))
             {
-                packetReceiver.PacketReceived(packet);                
+                packetReceiver.PacketReceived(packet);
             }
 
             if (connection.Open)
             {
-                connection.BeginReceive(new AsyncCallback(DataReceived));
-            } else
+                connection.BeginReceive(DataReceived);
+            }
+            else
             {
                 Log.Debug("Error reading data from server");
                 Stop();
@@ -70,21 +72,16 @@ namespace NitroxClient.Communication
 
         public void Send(Packet packet)
         {
-            connection.SendPacket(packet, new AsyncCallback(PacketSentSuccessful));
+            connection.SendPacket(packet, PacketSentSuccessful);
         }
 
         public void PacketSentSuccessful(IAsyncResult ar)
         {
-
         }
 
         public bool IsConnected()
         {
-            if (connection == null)
-            {
-                return false;
-            }
-            return connection.Open;
+            return connection != null && connection.Open;
         }
     }
 }

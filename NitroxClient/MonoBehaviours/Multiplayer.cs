@@ -71,6 +71,7 @@ namespace NitroxClient.MonoBehaviours
             {
                 ProcessPackets();
             }
+            PacketSender.UpdateRatelimitedPackets();
         }
 
         public void ProcessPackets()
