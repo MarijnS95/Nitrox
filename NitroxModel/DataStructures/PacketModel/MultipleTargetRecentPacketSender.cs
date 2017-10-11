@@ -30,10 +30,9 @@ namespace NitroxModel.DataStructures.PacketModel
             Target target;
             if (!targets.TryGetValue(targetKey, out target))
             {
-                target = new Target();
+                targets[targetKey] = target = new Target();
             }
             target.lastPacket = newPacket;
-            targets[targetKey] = target;
             Send(sender);
         }
 
