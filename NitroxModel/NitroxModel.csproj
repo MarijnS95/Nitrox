@@ -47,7 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataStructures\PacketModel\LastPacket.cs" />
+    <Compile Include="DataStructures\PacketModel\IMostRecentPacketSender.cs" />
+    <Compile Include="DataStructures\PacketModel\ITargetedPacket.cs" />
+    <Compile Include="DataStructures\PacketModel\MultipleTargetRecentPacketSender.cs" />
     <Compile Include="DataStructures\PacketModel\RatelimitedAttribute.cs" />
     <Compile Include="DataStructures\Chunk.cs" />
     <Compile Include="DataStructures\GameLogic\EscapePodModel.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="DataStructures\InteractiveChildObjectIdentifier.cs" />
     <Compile Include="DataStructures\Optional.cs" />
     <Compile Include="DataStructures\OwnedGuid.cs" />
+    <Compile Include="DataStructures\PacketModel\SingleTargetRecentPacketSender.cs" />
     <Compile Include="DataStructures\PriorityQueue.cs" />
     <Compile Include="DataStructures\ServerModel\VehicleModel.cs" />
     <Compile Include="DataStructures\Surrogates\ColorSurrogate.cs" />

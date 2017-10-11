@@ -2,6 +2,7 @@
 using NitroxModel.DataStructures.PacketModel;
 using NitroxModel.DataStructures.ServerModel;
 using NitroxModel.DataStructures.Util;
+using NitroxModel.Helper;
 using NitroxModel.Logger;
 using NitroxModel.PacketModel;
 using NitroxModel.Packets;
@@ -19,7 +20,7 @@ namespace NitroxClient.Communication
 
         private TcpClient client;
         private readonly HashSet<Type> suppressedPacketsTypes = new HashSet<Type>();
-        private readonly Dictionary<Type, LastPacket> lastPackets;
+        private readonly Dictionary<Type, IMostRecentPacketSender> lastPackets;
 
         public PacketSender(TcpClient client)
         {
@@ -31,7 +32,19 @@ namespace NitroxClient.Communication
                     && t.IsClass
                     && typeof(Packet).IsAssignableFrom(t)
                     && Attribute.IsDefined(t, typeof(RatelimitedAttribute)))
-                .ToDictionary(t => t, t => new LastPacket(((RatelimitedAttribute)Attribute.GetCustomAttribute(t, typeof(RatelimitedAttribute))).SecondsPerPacket));
+                .ToDictionary(packet => packet, packet =>
+                {
+                    var attr = (RatelimitedAttribute)Attribute.GetCustomAttribute(packet, typeof(RatelimitedAttribute));
+                    if (attr.HasMultipleTargets)
+                    {
+                        Validate.IsTrue(typeof(ITargetedPacket).IsAssignableFrom(packet), $"{packet} uses a MultiTarget ratelimiter, but does not implement ITargetedPacket!");
+                        return (IMostRecentPacketSender)new MultipleTargetRecentPacketSender(attr.SecondsPerPacket);
+                    }
+                    else
+                    {
+                        return new SingleTargetRecentPacketSender(attr.SecondsPerPacket);
+                    }
+                });
         }
 
         public void Authenticate()
@@ -80,7 +93,7 @@ namespace NitroxClient.Communication
         {
             if (Active && !suppressedPacketsTypes.Contains(packet.GetType()))
             {
-                LastPacket lp;
+                IMostRecentPacketSender lp;
                 if (lastPackets.TryGetValue(packet.GetType(), out lp))
                 {
                     lp.UpdateAndSend(packet, SendImmediately);

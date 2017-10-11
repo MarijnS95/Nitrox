@@ -6,6 +6,7 @@ namespace NitroxModel.PacketModel
     public sealed class RatelimitedAttribute : Attribute
     {
         public float SecondsPerPacket { get; set; }
+        public bool HasMultipleTargets { get; set; }
 
         public RatelimitedAttribute(float secondsPerPacket)
         {

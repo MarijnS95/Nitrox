@@ -5,13 +5,13 @@ using UnityEngine;
 
 namespace NitroxModel.DataStructures.PacketModel
 {
-    public class LastPacket
+    public class SingleTargetRecentPacketSender : IMostRecentPacketSender
     {
         private Packet lastPacket;
         private float lastSentAt = 0;
         private readonly float secondsBetweenSends;
 
-        public LastPacket(float secondsBetweenSends)
+        public SingleTargetRecentPacketSender(float secondsBetweenSends)
         {
             this.secondsBetweenSends = secondsBetweenSends;
         }
@@ -20,14 +20,8 @@ namespace NitroxModel.DataStructures.PacketModel
         {
             Validate.NotNull(newPacket, "Update packet cannot be null.");
 
-            // TODO: Either store multiple packets based on their target, or remove TargetEquals.
-            // This is for cases where multiple packets intended for different targets are sent,
-            // in which case we need a ratelimiter per target.
-            if (lastPacket == null || lastPacket.TargetEquals(newPacket))
-            {
-                lastPacket = newPacket;
-                Send(sender);
-            }
+            lastPacket = newPacket;
+            Send(sender);
         }
 
         public void Send(Action<Packet> sender)
