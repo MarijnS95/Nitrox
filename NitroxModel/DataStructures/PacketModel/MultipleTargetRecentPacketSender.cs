@@ -14,7 +14,7 @@ namespace NitroxModel.DataStructures.PacketModel
             internal float lastSentAt = 0;
         }
 
-        Dictionary<object, Target> targets;
+        private readonly Dictionary<object, Target> targets = new Dictionary<object, Target>();
         private readonly float secondsBetweenSends;
 
         public MultipleTargetRecentPacketSender(float secondsBetweenSends)

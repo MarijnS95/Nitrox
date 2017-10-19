@@ -1,12 +1,13 @@
-﻿using NitroxModel.PacketModel;
+﻿using NitroxModel.DataStructures.PacketModel;
+using NitroxModel.PacketModel;
 using System;
 using UnityEngine;
 
 namespace NitroxModel.Packets
 {
     [Serializable]
-    [Ratelimited(.200f)]
-    public class CyclopsChangeColor : AuthenticatedPacket
+    [Ratelimited(.2f, HasMultipleTargets = true)]
+    public class CyclopsChangeColor : AuthenticatedPacket, ITargetedPacket
     {
         public String Guid { get; private set; }
         public int Index { get; private set; }
@@ -24,6 +25,11 @@ namespace NitroxModel.Packets
         public override string ToString()
         {
             return "[CyclopsChangeColor PlayerId: " + PlayerId + " Guid: " + Guid + " Index: " + Index + " hsb: " + HSB + " Color: " + Color + "]";
+        }
+
+        public object GetTarget()
+        {
+            return Index + Guid;
         }
     }
 }
