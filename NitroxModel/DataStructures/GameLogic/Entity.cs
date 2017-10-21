@@ -10,6 +10,7 @@ namespace NitroxModel.GameLogic
         public TechType TechType { get; }
         public string Guid { get; }
         public int Level { get; }
+
         public Entity(Vector3 position, TechType techType, string guid, int level)
         {
             Position = position;
