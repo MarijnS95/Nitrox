@@ -1,5 +1,25 @@
 # Contributing
 
+## Issues
+Hi! Thanks for contributing to the issue section :clap:! Please read the short guide below before submitting your issue, it'll greatly help us all, promise!
+
+### Duplicates
+The search functionality on GitHub is *awesome*, you should try it. In all seriousness, your concerns may've been answered already; the search bar takes you there in seconds rather than having to wait for someone to respond.
+Besides, it's a given that developers tend to get pissed off when they spend tons of time on a project, only to be confronted by someone too lazy to search and read for a minute, thinking they can consume even more of their precious time.
+
+### Missing features
+Please remember that this mod is still in early stages of development. It's very likely that something is missing because we've not yet gotten to it. Of course, we're always open for more contributors to help out!
+
+### Crashes or broken features
+Before submitting your issue, be sure to do the following:
+- Clean all generated files (`obj` folder, `bin` folder, and the `Nitrox*.dll` files in the `Managed` folder of subnautica). You can also use the `Clean` button from Visual Studio, but make sure the Nitrox libraries in the Subnautica `Managed` folder are updated after compiling.
+- *Ensure you have a clean working tree and are checked out to the **latest master***.
+- **Re**build the solution and try to reproduce.
+
+These steps are very important. Without it, we can only *guess* what code you compiled, leading to confusing issues we can't reproduce.
+
+When submitting your issue, please include `output_log.txt`, so that we can see the exception and other related information.
+
 ## Code
 We do not have a formatting guideline *yet*, and expect you to write code with common sense in mind. Consistency is key, so look at the surrounding code and adhere to the same standards. Always check the diff before you commit (and more importantly: before filing a PR); many irrelevant changes usually mean your autoformat settings are off. Luckily, our project now includes a `.editorconfig` that automatically sets all the built-in formatting/language-rules. This is however only supported in Visual Studio 2017.
 A large list of discussion items has been compiled [here](https://github.com/SubnauticaNitrox/Nitrox/issues/36), which hopefully make it into a guideline soon™.
