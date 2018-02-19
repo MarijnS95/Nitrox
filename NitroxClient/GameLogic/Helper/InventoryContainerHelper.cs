@@ -1,4 +1,4 @@
-﻿using NitroxModel.DataStructures.Util;
+﻿using NitroxModel.DataStructures;
 using UnityEngine;
 
 namespace NitroxClient.GameLogic.Helper

@@ -2,7 +2,7 @@
 using NitroxClient.Communication.MultiplayerSession;
 using NitroxClient.GameLogic;
 using NitroxModel.Core;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 using NitroxModel.Logger;
 using NitroxModel.MultiplayerSession;
 using UnityEngine;

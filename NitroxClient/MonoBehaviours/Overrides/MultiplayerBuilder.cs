@@ -1,7 +1,7 @@
 ﻿#pragma warning disable // Disable all warnings for copied file
 
 using System.Collections.Generic;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 using NitroxModel.Helper;
 using NitroxModel.Logger;
 using UnityEngine;

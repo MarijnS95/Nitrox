@@ -1,5 +1,5 @@
 ﻿using System;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 
 namespace NitroxModel.MultiplayerSession
 {

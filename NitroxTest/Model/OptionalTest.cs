@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 
 namespace NitroxTest.Model
 {
@@ -53,42 +53,42 @@ namespace NitroxTest.Model
         [TestMethod]
         public void OptionalValueTypeGet()
         {
-            Optional<int> op = Optional<int>.Of(1);
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Of(1);
             Assert.AreEqual(1, op.Get());
         }
 
         [TestMethod]
         public void OptionalValueTypeIsPresent()
         {
-            Optional<int> op = Optional<int>.Of(1);
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Of(1);
             Assert.AreEqual(true, op.IsPresent());
         }
 
         [TestMethod]
         public void OptionalValueTypeIsNotPresent()
         {
-            Optional<int> op = Optional<int>.Empty();
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Empty();
             Assert.AreEqual(false, op.IsPresent());
         }
 
         [TestMethod]
         public void OptionalValueTypeOrElseValidValue()
         {
-            Optional<int> op = Optional<int>.Of(1);
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Of(1);
             Assert.AreEqual(1, op.OrElse(2));
         }
 
         [TestMethod]
         public void OptionalValueTypeOrElseNoValue()
         {
-            Optional<int> op = Optional<int>.Empty();
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Empty();
             Assert.AreEqual(1, op.OrElse(1));
         }
 
         [TestMethod]
         public void OptionalValueTypeEmpty()
         {
-            Optional<int> op = Optional<int>.Empty();
+            ValueTypeOptional<int> op = ValueTypeOptional<int>.Empty();
             Assert.AreEqual(true, op.IsEmpty());
         }
     }

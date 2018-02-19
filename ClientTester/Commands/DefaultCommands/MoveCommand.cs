@@ -3,7 +3,7 @@ using System.Timers;
 using NitroxClient.GameLogic;
 using NitroxModel.Core;
 using NitroxModel.DataStructures.ServerModel;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 using UnityEngine;
 
 namespace ClientTester.Commands.DefaultCommands

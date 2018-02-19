@@ -1,11 +1,17 @@
 ﻿using System;
 
-namespace NitroxModel.DataStructures.Util
+namespace NitroxModel.DataStructures
 {
     [Serializable]
-    public struct Optional<T>
+    public class Optional<T> : IOptional<T>
+        where T : class
     {
-        private T value;
+        private readonly T value;
+
+        private Optional()
+        {
+            value = null;
+        }
 
         private Optional(T value)
         {
@@ -19,7 +25,7 @@ namespace NitroxModel.DataStructures.Util
 
         public static Optional<T> Of(T value)
         {
-            if (value.Equals(default(T)))
+            if (value == null)
             {
                 throw new ArgumentNullException("Value cannot be null");
             }
@@ -32,7 +38,7 @@ namespace NitroxModel.DataStructures.Util
             return new Optional<T>(value);
         }
 
-        public T Get()
+        public override T Get()
         {
             if (IsEmpty())
             {
@@ -42,34 +48,9 @@ namespace NitroxModel.DataStructures.Util
             return value;
         }
 
-        public bool IsPresent()
+        public override bool IsPresent()
         {
-            return !IsEmpty();
-        }
-
-        public bool IsEmpty()
-        {
-            return value == null || value.Equals(default(T));
-        }
-
-        public T OrElse(T elseValue)
-        {
-            if (IsPresent())
-            {
-                return value;
-            }
-
-            return elseValue;
-        }
-
-        public override string ToString()
-        {
-            if (IsEmpty())
-            {
-                return "Optional<" + typeof(T) + ">.Empty()";
-            }
-
-            return "Optional[" + Get().ToString() + "]";
+            return value != null;
         }
     }
 

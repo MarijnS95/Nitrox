@@ -2,7 +2,8 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
+using NitroxModel.DataStructures;
 using NitroxModel.Packets;
 using NitroxModel.Packets.Exceptions;
 
@@ -78,7 +79,7 @@ namespace NitroxModel.Helper
             }
         }
 
-        public static void IsPresent<T>(Optional<T> opt)
+        public static void IsPresent<T>(IOptional<T> opt)
         {
             if (opt.IsEmpty())
             {
@@ -86,7 +87,7 @@ namespace NitroxModel.Helper
             }
         }
 
-        public static void IsPresent<T>(Optional<T> opt, string message)
+        public static void IsPresent<T>(IOptional<T> opt, string message)
         {
             if (opt.IsEmpty())
             {

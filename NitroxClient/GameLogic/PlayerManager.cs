@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NitroxClient.GameLogic.PlayerModelBuilder;
-using NitroxModel.DataStructures.Util;
+using NitroxModel.DataStructures;
 using NitroxModel.MultiplayerSession;
 
 namespace NitroxClient.GameLogic
