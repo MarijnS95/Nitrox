@@ -8,6 +8,8 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
 {
     public class PlayerPingBuilder : IPlayerModelBuilder
     {
+        private static Color[] newColorOptions;
+
         public void Build(INitroxPlayer player)
         {
             GameObject signalBase = Object.Instantiate(Resources.Load("VFX/xSignal")) as GameObject;
@@ -26,10 +28,25 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
         private static void SetPingColor(INitroxPlayer player, PingInstance ping)
         {
             FieldInfo field = typeof(PingManager).GetField("colorOptions", BindingFlags.Static | BindingFlags.Public);
-            Color[] originalColorOptions = PingManager.colorOptions;
 
-            Color[] newColorOptions = new Color[originalColorOptions.Length + 1];
-            originalColorOptions.ForEach(color => newColorOptions[Array.IndexOf(originalColorOptions, color)] = color);
+            if (newColorOptions == null)
+            {
+                // This condition is necessary.
+                // Apparently the array is somehow transformed to a byte array,
+                // at least that's what's reported by subsequent calls reading from this field.
+
+                newColorOptions = PingManager.colorOptions;
+            }
+
+            // A (static) reference to newColorOptions has to be kept because SetValue to the readonly
+            // PingManager.colorOptions field does not count as a proper handle.
+            // Not doing so causes it to be garbage collected, resulting in an engine crash the next
+            // time it's accessed (not even a NullReferenceException).
+
+            // ASSUMPTION: This readonly field is intialized at declaration, so it might've been optimized
+            // such that this field is not taken into account when checking for unreferenced objects.
+
+            Array.Resize(ref newColorOptions, newColorOptions.Length + 1);
             newColorOptions[newColorOptions.Length - 1] = player.PlayerSettings.PlayerColor;
 
             // Replace the normal colorOptions with our colorOptions (has one color more with the player-color). Set the color of the ping with this. Then replace it back.

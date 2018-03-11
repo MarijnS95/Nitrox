@@ -37,7 +37,7 @@ namespace NitroxClient.Communication
                 if (connection.Open)
                 {
                     IsConnected = true;
-                    connection.BeginReceive(new AsyncCallback(DataReceived));
+                    connection.BeginReceive(DataReceived);
                 }
             }
             catch (Exception e)
@@ -55,10 +55,8 @@ namespace NitroxClient.Communication
 
         public void Send(Packet packet)
         {
-            connection.SendPacket(packet, new AsyncCallback(packetSentSuccessful));
+            connection.SendPacket(packet, null);
         }
-
-        public void packetSentSuccessful(IAsyncResult ar) { }
 
         private void DataReceived(IAsyncResult ar)
         {
@@ -71,7 +69,7 @@ namespace NitroxClient.Communication
 
             if (connection.Open)
             {
-                connection.BeginReceive(new AsyncCallback(DataReceived));
+                connection.BeginReceive(DataReceived);
             }
             else
             {
