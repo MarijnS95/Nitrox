@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures;
 
 namespace NitroxModel.Packets
@@ -25,16 +25,7 @@ namespace NitroxModel.Packets
 
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder("[SimulationOwnershipChange - ");
-
-            foreach (OwnedGuid ownedGuid in OwnedGuids)
-            {
-                stringBuilder.Append(ownedGuid.ToString());
-            }
-
-            stringBuilder.Append("]");
-
-            return stringBuilder.ToString();
+            return "[SimulationOwnershipChange: {" + OwnedGuids.Join(" ") + "}]";
         }
     }
 }

@@ -48,7 +48,7 @@ namespace NitroxClient.Communication.Packets.Processors
             Optional<GameObject> gameObject = entitySpawner.Spawn(entity, parent);
             alreadySpawnedGuids.Add(entity.Guid);
 
-            foreach(Entity childEntity in entity.ChildEntities)
+            foreach (Entity childEntity in entity.ChildEntities)
             {
                 if (!entitySpawner.SpawnsOwnChildren())
                 {
@@ -80,7 +80,7 @@ namespace NitroxClient.Communication.Packets.Processors
             }
             else
             {
-                Log.Error("Entity was already spawned but not found(is it in another chunk?) guid: " + entity.Guid + " " + entity.TechType + " " + entity.ClassId);
+                Log.Error("Entity was already spawned but not found (is it in another chunk?), Guid: " + entity.Guid + ", TechType: " + entity.TechType + ", ClassId: " + entity.ClassId);
             }
         }
     }

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using NitroxModel.DataStructures.GameLogic;
 using NitroxModel.Logger;
+using NitroxServer.GameLogic.Entities.Spawning.EntityBootstrappers;
 using NitroxServer.Serialization;
 using UWE;
 using static LootDistributionData;
-using NitroxServer.GameLogic.Entities.Spawning.EntityBootstrappers;
 
 namespace NitroxServer.GameLogic.Entities.Spawning
 {
@@ -69,7 +69,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning
                     {
                         entities.AddRange(SpawnEntitiesUsingRandomDistribution(esp, dstData));
                     }
-                    else if(esp.ClassId != null)
+                    else if (esp.ClassId != null)
                     {
                         entities.AddRange(SpawnEntitiesStaticly(esp));
                     }
@@ -97,7 +97,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning
             double rollingProbability = 0;
             PrefabData selectedPrefab = dstData.prefabs.FirstOrDefault(prefab =>
             {
-                if(prefab.probability == 0)
+                if (prefab.probability == 0)
                 {
                     return false;
                 }
@@ -113,9 +113,9 @@ namespace NitroxServer.GameLogic.Entities.Spawning
             {
                 for (int i = 0; i < selectedPrefab.count; i++)
                 {
-                    IEnumerable<Entity> entities = CreateEntityWithChildren(entitySpawnPoint, 
-                                                                            worldEntityInfo.techType, 
-                                                                            worldEntityInfo.cellLevel, 
+                    IEnumerable<Entity> entities = CreateEntityWithChildren(entitySpawnPoint,
+                                                                            worldEntityInfo.techType,
+                                                                            worldEntityInfo.cellLevel,
                                                                             selectedPrefab.classId);
                     foreach (Entity entity in entities)
                     {
@@ -130,15 +130,12 @@ namespace NitroxServer.GameLogic.Entities.Spawning
             WorldEntityInfo worldEntityInfo;
             if (worldEntitiesByClassId.TryGetValue(entitySpawnPoint.ClassId, out worldEntityInfo))
             {
-                IEnumerable<Entity> entities = CreateEntityWithChildren(entitySpawnPoint, 
-                                                                        worldEntityInfo.techType, 
-                                                                        worldEntityInfo.cellLevel, 
-                                                                        entitySpawnPoint.ClassId);
-                foreach (Entity entity in entities)
-                {
-                    yield return entity;
-                }
+                return CreateEntityWithChildren(entitySpawnPoint,
+                                                worldEntityInfo.techType,
+                                                worldEntityInfo.cellLevel,
+                                                entitySpawnPoint.ClassId);
             }
+            return Enumerable.Empty<Entity>();
         }
 
         private IEnumerable<Entity> CreateEntityWithChildren(EntitySpawnPoint entitySpawnPoint, TechType techType, LargeWorldEntity.CellLevel cellLevel, string classId)
@@ -155,7 +152,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning
             {
                 bootstrapper.Prepare(spawnedEntity);
 
-                foreach(Entity childEntity in spawnedEntity.ChildEntities)
+                foreach (Entity childEntity in spawnedEntity.ChildEntities)
                 {
                     yield return childEntity;
                 }

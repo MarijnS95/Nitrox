@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NitroxClient.GameLogic.ChatUI;
+using NitroxClient.Unity.Helper;
 using NitroxModel;
 using UnityEngine;
 
@@ -67,11 +68,9 @@ namespace NitroxClient.MonoBehaviours.Gui.Chat
 
         private void BuildChatText()
         {
-            string[] formattedEntries = entries
+            chatText.text = entries
                 .Select(entry => $"<color={entry.PlayerColor.AsHexString()}><b>{entry.PlayerName}: </b></color>{entry.MessageText}")
-                .ToArray();
-
-            chatText.text = string.Join("\n", formattedEntries);
+                .Join("\n");
         }
 
         private string SanitizeMessage(string message)

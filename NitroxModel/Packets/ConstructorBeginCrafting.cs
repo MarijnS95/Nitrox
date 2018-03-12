@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.GameLogic;
 
 namespace NitroxModel.Packets
@@ -24,14 +25,7 @@ namespace NitroxModel.Packets
 
         public override string ToString()
         {
-            string s = "[ConstructorBeginCrafting - ConstructorGuid: " + ConstructorGuid + " ConstructedItemGuid: " + ConstructedItemGuid + " TechType: " + TechType + " Duration: " + Duration + " InteractiveChildIdentifiers: (";
-
-            foreach (InteractiveChildObjectIdentifier childIdentifier in InteractiveChildIdentifiers)
-            {
-                s += childIdentifier + " ";
-            }
-
-            return s + ")";
+            return "[ConstructorBeginCrafting - ConstructorGuid: " + ConstructorGuid + " ConstructedItemGuid: " + ConstructedItemGuid + " TechType: " + TechType + " Duration: " + Duration + " InteractiveChildIdentifiers: {" + InteractiveChildIdentifiers.Join(" ") + "}]";
         }
     }
 }

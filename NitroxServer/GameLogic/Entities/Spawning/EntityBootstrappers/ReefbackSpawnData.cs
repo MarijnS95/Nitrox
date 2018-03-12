@@ -12,7 +12,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning.EntityBootstrappers
             public int maxNumber;
             public float probability;
         }
-        
+
         public static List<ReefbackEntity> SpawnableCreatures { get; } = new List<ReefbackEntity>()
         {
             new ReefbackEntity() { techType = TechType.Peeper, probability = 1, minNumber = 1, maxNumber = 2 },

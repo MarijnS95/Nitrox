@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using NitroxModel.Helper;
 
 namespace NitroxClient.Unity.Helper
@@ -19,6 +20,30 @@ namespace NitroxClient.Unity.Helper
             Validate.NotNull(appendix);
 
             return value.Length <= maxChars ? value : appendix + value.Substring(value.Length - maxChars, maxChars);
+        }
+
+        public static string Join<T>(this IEnumerable<T> items, string separator)
+        {
+            Validate.NotNull(items);
+            Validate.NotNull(separator);
+
+            IEnumerator<T> e = items.GetEnumerator();
+
+            if (!e.MoveNext())
+            {
+                return "";
+            }
+
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(e.Current);
+
+            while (e.MoveNext())
+            {
+                sb.Append(separator).Append(e.Current);
+            }
+
+            return sb.ToString();
         }
 
         public static string ByteArrayToHexString(this byte[] bytes)

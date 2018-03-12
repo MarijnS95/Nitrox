@@ -19,7 +19,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning.EntityBootstrappers
 
         public void Prepare(Entity parentEntity)
         {
-            for(int spawnPointCounter = 0; spawnPointCounter < LocalCreatureSpawnPoints.Count; spawnPointCounter++)
+            for (int spawnPointCounter = 0; spawnPointCounter < LocalCreatureSpawnPoints.Count; spawnPointCounter++)
             {
                 Vector3 localSpawnPosition = LocalCreatureSpawnPoints[spawnPointCounter];
                 float targetProbabilitySum = (float)random.NextDouble() * creatureProbabiltySum;
@@ -29,11 +29,11 @@ namespace NitroxServer.GameLogic.Entities.Spawning.EntityBootstrappers
                 {
                     probabilitySum += creature.probability;
 
-                    if(probabilitySum >= targetProbabilitySum)
+                    if (probabilitySum >= targetProbabilitySum)
                     {
                         int totalToSpawn = random.Next(creature.minNumber, creature.maxNumber + 1);
 
-                        for(int i = 0; i < totalToSpawn; i++)
+                        for (int i = 0; i < totalToSpawn; i++)
                         {
                             Entity child = new Entity(parentEntity.Position + localSpawnPosition, parentEntity.Rotation, creature.techType, parentEntity.Level, parentEntity.ClassId);
                             parentEntity.ChildEntities.Add(child);

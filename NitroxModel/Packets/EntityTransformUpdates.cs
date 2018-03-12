@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NitroxClient.Unity.Helper;
 using UnityEngine;
 
 namespace NitroxModel.Packets
@@ -26,14 +27,7 @@ namespace NitroxModel.Packets
 
         public override string ToString()
         {
-            string toString = "";
-
-            foreach (EntityTransformUpdate update in Updates)
-            {
-                toString += update + " ";
-            }
-
-            return "[EntityTransformUpdates - Updates: " + toString + "]";
+            return "[EntityTransformUpdates - Updates: " + Updates.Join(" ") + "]";
         }
 
         [Serializable]

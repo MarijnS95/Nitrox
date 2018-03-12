@@ -1,7 +1,9 @@
 ﻿using System;
-using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using NitroxClient.Unity.Helper;
 using ProtoBuf;
+using UnityEngine;
 
 namespace NitroxModel.DataStructures.GameLogic
 {
@@ -14,7 +16,7 @@ namespace NitroxModel.DataStructures.GameLogic
 
         [ProtoMember(2)]
         public Vector3 Position { get; set; }
-        
+
         [ProtoMember(3)]
         public Quaternion Rotation { get; set; }
 
@@ -50,7 +52,8 @@ namespace NitroxModel.DataStructures.GameLogic
 
         public override string ToString()
         {
-            return "[Entity Position: " + Position + " TechType: " + TechType + " Guid: " + Guid + " Level: " + Level + " classId: " + ClassId + " ChildEntities: " + ChildEntities + "]";
+            return "[Entity Position: " + Position + " TechType: " + TechType + " Guid: " + Guid + " Level: " + Level + " classId: " + ClassId + " ChildEntities: {" +
+                ChildEntities.Join(", ") + "}]";
         }
     }
 }

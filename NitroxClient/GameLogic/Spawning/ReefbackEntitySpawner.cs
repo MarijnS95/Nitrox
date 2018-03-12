@@ -18,7 +18,7 @@ namespace NitroxClient.GameLogic.Spawning
         {
             Optional<GameObject> reefback = defaultSpawner.Spawn(entity, parent);
 
-            if(reefback.IsPresent())
+            if (reefback.IsPresent())
             {
                 ReefbackLife life = reefback.Get().GetComponent<ReefbackLife>();
                 life.initialized = true;
@@ -34,7 +34,7 @@ namespace NitroxClient.GameLogic.Spawning
                     }
                 }
             }
-            
+
             return Optional<GameObject>.Empty();
         }
 

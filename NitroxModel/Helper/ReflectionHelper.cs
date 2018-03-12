@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using NitroxClient.Unity.Helper;
 
 namespace NitroxModel.Helper
 {
@@ -81,7 +82,7 @@ namespace NitroxModel.Helper
             if (types != null && types.Length > 0)
             {
                 methodInfo = t.GetMethod(methodName, bindingFlags, null, types, null);
-                Validate.NotNull(methodInfo, $"Type \"{t.Name}\" does not have a method called \"{methodName}\", with bindingFlags {bindingFlags} and types {string.Join(", ", types.Select(typ => typ.ToString()).ToArray())}.");
+                Validate.NotNull(methodInfo, $"Type \"{t.Name}\" does not have a method called \"{methodName}\", with bindingFlags {bindingFlags} and types {types.Join(", ")}.");
             }
             else
             {

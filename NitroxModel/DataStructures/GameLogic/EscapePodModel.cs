@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NitroxClient.Unity.Helper;
 using UnityEngine;
 
 namespace NitroxModel.DataStructures.GameLogic
@@ -27,14 +28,7 @@ namespace NitroxModel.DataStructures.GameLogic
 
         public override string ToString()
         {
-            string toString = "[EscapePodModel - Guid: " + Guid + " Location:" + Location + " FabricatorGuid: " + FabricatorGuid + " MedicalFabricatorGuid: " + MedicalFabricatorGuid + " StorageContainerGuid: " + StorageContainerGuid + " RadioGuid: " + RadioGuid + " AssignedPlayers: {";
-
-            foreach (string playerId in AssignedPlayers)
-            {
-                toString += playerId + " ";
-            }
-
-            return toString + "}]";
+            return "[EscapePodModel - Guid: " + Guid + " Location:" + Location + " FabricatorGuid: " + FabricatorGuid + " MedicalFabricatorGuid: " + MedicalFabricatorGuid + " StorageContainerGuid: " + StorageContainerGuid + " RadioGuid: " + RadioGuid + " AssignedPlayers: {" + AssignedPlayers.Join(" ") + "}]";
         }
     }
 }

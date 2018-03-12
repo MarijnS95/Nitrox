@@ -230,7 +230,6 @@
     <Compile Include="Unity\Helper\GUISkinUtils.cs" />
     <Compile Include="Unity\Helper\GameObjectHelper.cs" />
     <Compile Include="Unity\Helper\MathUtil.cs" />
-    <Compile Include="Unity\Helper\StringUtils.cs" />
     <Compile Include="Unity\Smoothing\SmoothParameter.cs" />
     <Compile Include="Unity\Smoothing\SmoothRotation.cs" />
     <Compile Include="Unity\Smoothing\SmoothVector.cs" />

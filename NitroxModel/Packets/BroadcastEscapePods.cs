@@ -1,4 +1,5 @@
 ﻿using System;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.GameLogic;
 
 namespace NitroxModel.Packets
@@ -15,14 +16,7 @@ namespace NitroxModel.Packets
 
         public override string ToString()
         {
-            string toString = "[BroadcastEscapePods ";
-
-            foreach (EscapePodModel model in EscapePods)
-            {
-                toString += model + " ";
-            }
-
-            return toString + "]";
+            return "[BroadcastEscapePods " + EscapePods.Join(" ") + "]";
         }
     }
 }

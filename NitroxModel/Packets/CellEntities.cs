@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.GameLogic;
 
 namespace NitroxModel.Packets
@@ -16,14 +17,7 @@ namespace NitroxModel.Packets
 
         public override string ToString()
         {
-            string toString = "[CellEntities ";
-
-            foreach (Entity entity in Entities)
-            {
-                toString += entity;
-            }
-
-            return toString + "]";
+            return "[CellEntities " + Entities.Join(" ") + "]";
         }
     }
 }
