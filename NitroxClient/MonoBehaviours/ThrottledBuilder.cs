@@ -1,4 +1,6 @@
-﻿using NitroxClient.Communication.Abstract;
+﻿using System;
+using System.Reflection;
+using NitroxClient.Communication.Abstract;
 using NitroxClient.GameLogic.Bases;
 using NitroxClient.GameLogic.Helper;
 using NitroxClient.MonoBehaviours.Overrides;
@@ -9,8 +11,6 @@ using NitroxModel.DataStructures.Util;
 using NitroxModel.Helper;
 using NitroxModel.Logger;
 using NitroxModel.Packets;
-using System;
-using System.Reflection;
 using UnityEngine;
 
 namespace NitroxClient.MonoBehaviours
@@ -39,7 +39,7 @@ namespace NitroxClient.MonoBehaviours
 
         public void Update()
         {
-            if(LargeWorldStreamer.main == null || !LargeWorldStreamer.main.IsReady() || !LargeWorldStreamer.main.IsWorldSettled())
+            if (LargeWorldStreamer.main == null || !LargeWorldStreamer.main.IsReady() || !LargeWorldStreamer.main.IsWorldSettled())
             {
                 return;
             }
@@ -48,7 +48,7 @@ namespace NitroxClient.MonoBehaviours
 
             ProcessBuildEventsUntilFrameBlocked();
 
-            if(queueHadItems && buildEvents.Count == 0)
+            if (queueHadItems && buildEvents.Count == 0)
             {
                 QueueDrained(this, new EventArgs());
             }
@@ -111,19 +111,19 @@ namespace NitroxClient.MonoBehaviours
             MultiplayerBuilder.Begin(buildPrefab);
 
             GameObject parentBase = null;
-            
-            if(basePiece.ParentGuid.IsPresent())
+
+            if (basePiece.ParentGuid.IsPresent())
             {
                 parentBase = GuidHelper.RequireObjectFrom(basePiece.ParentGuid.Get());
             }
-            
+
             Constructable constructable;
             GameObject gameObject;
 
             if (basePiece.IsFurniture)
             {
                 SubRoot subRoot = (parentBase != null) ? parentBase.RequireComponent<SubRoot>() : null;
-                                
+
                 gameObject = MultiplayerBuilder.TryPlaceFurniture(subRoot);
                 constructable = gameObject.RequireComponentInParent<Constructable>();
             }
@@ -132,9 +132,9 @@ namespace NitroxClient.MonoBehaviours
                 constructable = MultiplayerBuilder.TryPlaceBase(parentBase);
                 gameObject = constructable.gameObject;
             }
-            
+
             GuidHelper.SetNewGuid(gameObject, basePiece.Guid);
-            
+
             /**
              * Manually call start to initialize the object as we may need to interact with it within the same frame.
              */
@@ -147,8 +147,7 @@ namespace NitroxClient.MonoBehaviours
         {
             GameObject constructing = GuidHelper.RequireObjectFrom(constructionCompleted.Guid);
             Constructable constructable = constructing.GetComponent<Constructable>();
-            constructable.constructedAmount = 1f;
-            constructable.SetState(true, true);
+            constructable.SetState(true);
 
             if (constructionCompleted.NewBaseCreatedGuid.IsPresent())
             {
@@ -197,7 +196,7 @@ namespace NitroxClient.MonoBehaviours
         private void DeconstructionCompleted(DeconstructionCompletedEvent completed)
         {
             GameObject deconstructing = GuidHelper.RequireObjectFrom(completed.Guid);
-            UnityEngine.Object.Destroy(deconstructing);
+            Destroy(deconstructing);
         }
     }
 }

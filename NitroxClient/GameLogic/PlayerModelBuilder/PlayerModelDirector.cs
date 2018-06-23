@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NitroxClient.GameLogic.PlayerModelBuilder
 {
-    //TODO: Refactor this into something that is event driven.
+    // TODO: Refactor this into something that is event driven.
     public class PlayerModelDirector
     {
         private readonly INitroxPlayer player;

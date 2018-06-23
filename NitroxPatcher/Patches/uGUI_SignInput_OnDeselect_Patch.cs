@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using Harmony;
-using NitroxModel.Core;
 using NitroxClient.GameLogic;
+using NitroxModel.Core;
 
 namespace NitroxPatcher.Patches
 {

@@ -1,5 +1,4 @@
-﻿using ProtoBuf;
-using System;
+﻿using System;
 
 namespace NitroxModel.DataStructures.Util
 {
@@ -97,11 +96,14 @@ namespace NitroxModel.DataStructures.Util
         }
 
         public abstract T Get();
+
         public abstract bool IsPresent();
+
         public abstract bool IsEmpty();
+
         public abstract T OrElse(T elseValue);
     }
-    
+
     [Serializable]
     public sealed class OptionalEmptyException<T> : Exception
     {

@@ -8,7 +8,7 @@ namespace NitroxServer.GameLogic.Entities
 {
     [ProtoContract]
     public class EntityData
-    {        
+    {
         [ProtoMember(1)]
         public Dictionary<string, Entity> SerializableEntitiesByGuid
         {
@@ -23,11 +23,11 @@ namespace NitroxServer.GameLogic.Entities
             {
                 entitiesByGuid = value;
 
-                foreach(Entity entity in entitiesByGuid.Values)
+                foreach (Entity entity in entitiesByGuid.Values)
                 {
                     List<Entity> absoluteEntityCellEntities = null;
 
-                    if(!entitiesByAbsoluteCell.TryGetValue(entity.AbsoluteEntityCell, out absoluteEntityCellEntities))
+                    if (!entitiesByAbsoluteCell.TryGetValue(entity.AbsoluteEntityCell, out absoluteEntityCellEntities))
                     {
                         absoluteEntityCellEntities = entitiesByAbsoluteCell[entity.AbsoluteEntityCell] = new List<Entity>();
                     }
@@ -39,7 +39,7 @@ namespace NitroxServer.GameLogic.Entities
 
         [ProtoIgnore]
         private Dictionary<AbsoluteEntityCell, List<Entity>> entitiesByAbsoluteCell = new Dictionary<AbsoluteEntityCell, List<Entity>>();
-        
+
         [ProtoIgnore]
         private Dictionary<string, Entity> entitiesByGuid = new Dictionary<string, Entity>();
 

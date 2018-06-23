@@ -14,8 +14,8 @@ namespace NitroxModel.Core
             ContainerBuilder builder = new ContainerBuilder();
             dependencyRegistrar.RegisterDependencies(builder);
 
-            //IgnoreStartableComponents - we don't want to cause "phantom" executions of the Start() method 
-            //on a Monobehaviour because someone accidentally did something funky with a DI registration.
+            // IgnoreStartableComponents - we don't want to cause "phantom" executions of the Start() method
+            // on a Monobehaviour because someone accidentally did something funky with a DI registration.
             DependencyContainer = builder.Build(ContainerBuildOptions.IgnoreStartableComponents);
         }
 

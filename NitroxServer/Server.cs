@@ -1,8 +1,8 @@
-﻿using NitroxModel.Logger;
+﻿using System.Timers;
+using NitroxModel.Logger;
 using NitroxServer.Communication;
 using NitroxServer.Communication.Packets;
 using NitroxServer.Serialization.World;
-using System.Timers;
 
 namespace NitroxServer
 {
@@ -18,7 +18,7 @@ namespace NitroxServer
             worldPersistence = new WorldPersistence();
             world = worldPersistence.Load();
             packetHandler = new PacketHandler(world);
-            tcpServer = new TcpServer(packetHandler, world.PlayerManager);            
+            tcpServer = new TcpServer(packetHandler, world.PlayerManager);
         }
 
         public void Start()
@@ -27,7 +27,7 @@ namespace NitroxServer
             Log.Info("Nitrox Server Started");
             EnablePeriodicSaving();
         }
-        
+
         private void EnablePeriodicSaving()
         {
             Timer timer = new Timer();

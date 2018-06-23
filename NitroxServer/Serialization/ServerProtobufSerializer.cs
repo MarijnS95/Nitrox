@@ -48,7 +48,7 @@ namespace NitroxServer.Serialization
             model.Add(typeof(UnityEngine.Transform), false).SetSurrogate(typeof(UnityStubs.Transform));
             model.Add(typeof(UnityEngine.GameObject), false).SetSurrogate(typeof(UnityStubs.GameObject));
         }
-        
+
         private void RegisterAssemblyClasses(string assemblyName)
         {
             foreach (Type type in Assembly.Load(assemblyName).GetTypes())

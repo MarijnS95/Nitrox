@@ -5,13 +5,13 @@ using NitroxClient.Communication.Abstract;
 using NitroxClient.Communication.MultiplayerSession;
 using NitroxClient.Communication.Packets.Processors.Abstract;
 using NitroxClient.GameLogic;
+using NitroxClient.GameLogic.Bases;
 using NitroxClient.GameLogic.ChatUI;
 using NitroxClient.GameLogic.HUD;
 using NitroxClient.GameLogic.PlayerModelBuilder;
 using NitroxClient.GameLogic.PlayerPreferences;
 using NitroxClient.Map;
 using NitroxModel.Core;
-using NitroxClient.GameLogic.Bases;
 
 namespace NitroxClient
 {
@@ -25,12 +25,12 @@ namespace NitroxClient
 
         private static void RegisterCoreDependencies(ContainerBuilder containerBuilder)
         {
-			containerBuilder.RegisterType<UnityPreferenceStateStateProvider>()
+            containerBuilder.RegisterType<UnityPreferenceStateStateProvider>()
                 .As<IPreferenceStateProvider>()
                 .SingleInstance();
 
             containerBuilder.RegisterType<PlayerPreferenceManager>().SingleInstance();
-				
+
             containerBuilder.RegisterType<MultiplayerSessionManager>()
                 .As<IMultiplayerSession>()
                 .As<IPacketSender>()
@@ -44,7 +44,7 @@ namespace NitroxClient
                 .AsSelf() //Would like to deprecate this registration at some point and just work through an abstraction.
                 .As<ILocalNitroxPlayer>()
                 .InstancePerLifetimeScope();
-            
+
             containerBuilder.RegisterType<PlayerManager>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PlayerVitalsManager>().InstancePerLifetimeScope();
             containerBuilder.RegisterType<PlayerChatManager>().InstancePerLifetimeScope();

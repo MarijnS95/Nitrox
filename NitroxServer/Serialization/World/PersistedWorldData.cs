@@ -1,11 +1,11 @@
-﻿using NitroxServer.GameLogic.Bases;
+using System;
+using System.Collections.Generic;
+using NitroxServer.GameLogic.Bases;
 using NitroxServer.GameLogic.Entities;
 using NitroxServer.GameLogic.Items;
 using NitroxServer.GameLogic.Players;
 using NitroxServer.GameLogic.Vehicles;
 using ProtoBufNet;
-using System;
-using System.Collections.Generic;
 
 namespace NitroxServer.Serialization.World
 {
@@ -13,14 +13,14 @@ namespace NitroxServer.Serialization.World
     public class PersistedWorldData
     {
         [ProtoMember(1)]
-        public long version { get; set; } = 1;
+        public long Version { get; set; } = 1;
 
         [ProtoMember(2)]
         public List<Int3> ParsedBatchCells { get; set; }
-        
+
         [ProtoMember(3)]
         public DateTime ServerStartTime { get; set; }
-        
+
         [ProtoMember(4)]
         public EntityData EntityData { get; set; }
 

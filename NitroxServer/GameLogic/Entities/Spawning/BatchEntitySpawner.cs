@@ -53,6 +53,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning
                 {
                     return new List<Entity>();
                 }
+
                 parsedBatches.Add(batchId);
             }
 
@@ -135,6 +136,7 @@ namespace NitroxServer.GameLogic.Entities.Spawning
                                                 worldEntityInfo.cellLevel,
                                                 entitySpawnPoint.ClassId);
             }
+
             return Enumerable.Empty<Entity>();
         }
 

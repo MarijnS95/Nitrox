@@ -30,10 +30,10 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
             this.replacementAlpha = replacementAlpha < 1f ? replacementAlpha : replacementAlpha / 255f;
         }
 
-        public List<ColorValueRange> HueValueRanges { get; }  
-        public List<ColorValueRange> SaturationValueRanges { get; } 
-        public List<ColorValueRange> VibranceValueRanges { get; } 
-        public List<ColorValueRange> AlphaValueRanges { get; } 
+        public List<ColorValueRange> HueValueRanges { get; }
+        public List<ColorValueRange> SaturationValueRanges { get; }
+        public List<ColorValueRange> VibranceValueRanges { get; }
+        public List<ColorValueRange> AlphaValueRanges { get; }
 
         public Color FilterColor(Color color)
         {
@@ -46,7 +46,7 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
 
             if (HueValueRanges.TrueForAll(valueRange => valueRange.Covers(hue)) &&
                 SaturationValueRanges.TrueForAll(valueRange => valueRange.Covers(saturation)) &&
-                VibranceValueRanges.TrueForAll(valueRange => valueRange.Covers(vibrance)) && 
+                VibranceValueRanges.TrueForAll(valueRange => valueRange.Covers(vibrance)) &&
                 AlphaValueRanges.TrueForAll(valueRange => valueRange.Covers(alpha)))
             {
                 float newHue = replacementHue >= 0f ? replacementHue : hue;
@@ -101,7 +101,6 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
             VibranceValueRanges.Add(new ColorValueRange(newFilterMinValue, newFilterMaxValue));
         }
 
-
         /// <summary>
         /// Adds a range to the alpha filter that could cause pixels whose alpha it covers to be replaced if their respective values are also covered by the hue and saturation filters.
         /// </summary>
@@ -111,7 +110,7 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
         {
             float newFilterMinValue = minAlpha < 1f ? minAlpha : minAlpha / 255f;
             float newFilterMaxValue = maxAlpha < 1f ? maxAlpha : maxAlpha / 255f;
-            
+
             AlphaValueRanges.Add(new ColorValueRange(newFilterMinValue, newFilterMaxValue));
         }
     }

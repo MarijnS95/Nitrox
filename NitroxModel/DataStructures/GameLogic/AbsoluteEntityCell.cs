@@ -1,7 +1,7 @@
 ﻿using System;
 using NitroxModel.Helper;
-using UnityEngine;
 using ProtoBuf;
+using UnityEngine;
 
 namespace NitroxModel.DataStructures.GameLogic
 {
@@ -11,16 +11,16 @@ namespace NitroxModel.DataStructures.GameLogic
     {
         [ProtoMember(1)]
         public Int3 BatchId { get; set; }
-        
+
         [ProtoMember(2)]
         public Int3 CellId { get; set; }
-        
+
         [ProtoMember(3)]
         public int Level { get; set; }
 
         public AbsoluteEntityCell()
         {
-            // For serialization 
+            // Default Constructor for serialization
         }
 
         public AbsoluteEntityCell(Int3 batchId, Int3 cellId, int level)

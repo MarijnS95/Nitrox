@@ -44,7 +44,7 @@ namespace NitroxClient.GameLogic
         {
             Optional<GameObject> owner = GuidHelper.GetObjectFrom(itemData.ContainerGuid);
 
-            if(owner.IsEmpty())
+            if (owner.IsEmpty())
             {
                 Log.Info("Unable to find inventory container with id: " + itemData.ContainerGuid);
                 return;

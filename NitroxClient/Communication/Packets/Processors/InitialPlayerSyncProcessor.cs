@@ -1,17 +1,17 @@
-﻿using NitroxClient.Communication.Abstract;
+﻿using System;
+using System.Collections.Generic;
+using NitroxClient.Communication.Abstract;
 using NitroxClient.Communication.Packets.Processors.Abstract;
 using NitroxClient.GameLogic;
 using NitroxClient.GameLogic.Bases;
 using NitroxClient.GameLogic.Helper;
 using NitroxClient.MonoBehaviours;
+using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.GameLogic;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Logger;
 using NitroxModel.Packets;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using NitroxClient.Unity.Helper;
 
 namespace NitroxClient.Communication.Packets.Processors
 {
@@ -92,7 +92,7 @@ namespace NitroxClient.Communication.Packets.Processors
             }
         }
 
-        private void SpawnInventoryItemsPlayer(string playerGuid,List<ItemData> inventoryItems)
+        private void SpawnInventoryItemsPlayer(string playerGuid, List<ItemData> inventoryItems)
         {
             foreach (ItemData itemdata in inventoryItems)
             {
@@ -120,13 +120,13 @@ namespace NitroxClient.Communication.Packets.Processors
             InventoryItemAdder itemAdder = new InventoryItemAdder(packetSender, itemContainers, inventoryItems);
             ThrottledBuilder.main.QueueDrained += itemAdder.AddItemsToInventories;
         }
-        
+
         /*
          * This class simply encapsulates a callback method that is invoked when the throttled builder
          * is completed with the initial sync of base items.  We keep this in a new class to be able to
          * hold the relevant inventory items and use them when the time comes.  This can be later extended
          * to wait on other events if need be.
-         */ 
+         */
         private class InventoryItemAdder
         {
             private IPacketSender packetSender;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace NitroxClient.GameLogic.PlayerPreferences
 {
-    //This abstraction allows us to write tests against the preferences manager. Otherwise - we are unduly tied to Unity.
+    // This abstraction allows us to write tests against the preferences manager. Otherwise - we are unduly tied to Unity.
     public class UnityPreferenceStateStateProvider : IPreferenceStateProvider
     {
         private const string UNITY_PREF_KEY_NAME = "NITROX_PLAYER_PREFS";

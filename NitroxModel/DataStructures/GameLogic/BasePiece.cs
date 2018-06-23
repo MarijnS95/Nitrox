@@ -1,6 +1,6 @@
-﻿using NitroxModel.DataStructures.Util;
+﻿using System;
+using NitroxModel.DataStructures.Util;
 using ProtoBuf;
-using System;
 using UnityEngine;
 
 namespace NitroxModel.DataStructures.GameLogic
@@ -22,7 +22,8 @@ namespace NitroxModel.DataStructures.GameLogic
         public TechType TechType { get; set; }
 
         [ProtoMember(5)]
-        public string SerializableParentBaseGuid {
+        public string SerializableParentBaseGuid
+        {
             get { return (ParentGuid.IsPresent()) ? ParentGuid.Get() : null; }
             set { ParentGuid = Optional<string>.OfNullable(value); }
         }
@@ -57,8 +58,8 @@ namespace NitroxModel.DataStructures.GameLogic
 
         public BasePiece()
         {
-            NewBaseGuid = Optional<String>.Empty();
-            ParentGuid = Optional<String>.Empty();
+            NewBaseGuid = Optional<string>.Empty();
+            ParentGuid = Optional<string>.Empty();
         }
 
         public BasePiece(string guid, Vector3 itemPosition, Quaternion rotation, Vector3 cameraPosition, Quaternion cameraRotation, TechType techType, Optional<string> parentGuid, bool isFurniture)

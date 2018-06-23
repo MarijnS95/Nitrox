@@ -1,7 +1,7 @@
-﻿using NitroxModel.DataStructures.GameLogic;
-using ProtoBufNet;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using NitroxModel.DataStructures.GameLogic;
+using ProtoBufNet;
 
 namespace NitroxServer.GameLogic.Players
 {
@@ -22,7 +22,7 @@ namespace NitroxServer.GameLogic.Players
         }
 
         private Dictionary<string, PersistedPlayerData> playersByPlayerName = new Dictionary<string, PersistedPlayerData>();
-        
+
         public void AddEquipment(string playerName, EquippedItemData equippedItem)
         {
             lock (playersByPlayerName)
@@ -100,6 +100,5 @@ namespace NitroxServer.GameLogic.Players
                 PlayerName = playerName;
             }
         }
-
     }
 }

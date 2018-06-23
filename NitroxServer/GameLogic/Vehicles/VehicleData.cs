@@ -1,6 +1,6 @@
-﻿using NitroxModel.DataStructures.GameLogic;
+﻿using System.Collections.Generic;
+using NitroxModel.DataStructures.GameLogic;
 using ProtoBufNet;
-using System.Collections.Generic;
 
 namespace NitroxServer.GameLogic.Vehicles
 {
@@ -22,10 +22,10 @@ namespace NitroxServer.GameLogic.Vehicles
 
         [ProtoIgnore]
         private Dictionary<string, VehicleModel> vehiclesByGuid = new Dictionary<string, VehicleModel>();
-        
+
         public void UpdateVehicle(VehicleModel vehicleModel)
         {
-            lock(vehiclesByGuid)
+            lock (vehiclesByGuid)
             {
                 vehiclesByGuid[vehicleModel.Guid] = vehicleModel;
             }
@@ -41,11 +41,10 @@ namespace NitroxServer.GameLogic.Vehicles
 
         public List<VehicleModel> GetVehiclesForInitialSync()
         {
-            lock(vehiclesByGuid)
+            lock (vehiclesByGuid)
             {
                 return new List<VehicleModel>(vehiclesByGuid.Values);
             }
         }
-
     }
 }

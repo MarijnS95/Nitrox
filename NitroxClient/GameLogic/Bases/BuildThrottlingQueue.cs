@@ -1,7 +1,7 @@
-﻿using NitroxModel.DataStructures.GameLogic;
+﻿using System.Collections.Generic;
+using NitroxModel.DataStructures.GameLogic;
 using NitroxModel.DataStructures.Util;
 using NitroxModel.Logger;
-using System.Collections.Generic;
 
 namespace NitroxClient.GameLogic.Bases
 {
@@ -17,7 +17,7 @@ namespace NitroxClient.GameLogic.Bases
     {
         public bool NextEventRequiresFreshFrame()
         {
-            if(Count > 0)
+            if (Count > 0)
             {
                 BuildEvent nextEvent = Peek();
                 return nextEvent.RequiresFreshFrame();

@@ -1,7 +1,7 @@
-﻿using NitroxModel.DataStructures.GameLogic;
+﻿using System.Collections.Generic;
+using NitroxModel.DataStructures.GameLogic;
 using NitroxModel.DataStructures.Util;
 using ProtoBufNet;
-using System.Collections.Generic;
 
 namespace NitroxServer.GameLogic.Bases
 {
@@ -42,7 +42,7 @@ namespace NitroxServer.GameLogic.Bases
 
         public void AddBasePiece(BasePiece basePiece)
         {
-            lock(basePiecesByGuid)
+            lock (basePiecesByGuid)
             {
                 basePiecesByGuid.Add(basePiece.Guid, basePiece);
             }
@@ -78,7 +78,7 @@ namespace NitroxServer.GameLogic.Bases
                         basePiece.ParentGuid = Optional<string>.Empty();
                     }
 
-                    lock(completedBasePieceHistory)
+                    lock (completedBasePieceHistory)
                     {
                         completedBasePieceHistory.Add(basePiece);
                     }
@@ -107,7 +107,7 @@ namespace NitroxServer.GameLogic.Bases
             {
                 if (basePiecesByGuid.TryGetValue(guid, out basePiece))
                 {
-                    lock(completedBasePieceHistory)
+                    lock (completedBasePieceHistory)
                     {
                         completedBasePieceHistory.Remove(basePiece);
                     }
@@ -120,14 +120,14 @@ namespace NitroxServer.GameLogic.Bases
         public List<BasePiece> GetBasePiecesForNewlyConnectedPlayer()
         {
             List<BasePiece> basePieces;
-            
-            lock(completedBasePieceHistory)
+
+            lock (completedBasePieceHistory)
             {
                 // Play back all completed base pieces first (other pieces have a dependency on these being done)
                 basePieces = new List<BasePiece>(completedBasePieceHistory);
             }
 
-            lock(basePiecesByGuid)
+            lock (basePiecesByGuid)
             {
                 // Play back pieces that may not be completed yet.
                 foreach (BasePiece basePiece in basePiecesByGuid.Values)

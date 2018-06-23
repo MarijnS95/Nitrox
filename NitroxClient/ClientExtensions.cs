@@ -5,8 +5,8 @@ namespace NitroxClient
 {
     public static class ClientExtensions
     {
-        //This entire method is necessary in order to deal with the fact that UWE compiles Subnautica in a mode 
-        //that prevents us from accessing the pixel map of the 2D textures they apply to their materials. 
+        // This entire method is necessary in order to deal with the fact that UWE compiles Subnautica in a mode
+        // that prevents us from accessing the pixel map of the 2D textures they apply to their materials.
         public static Texture2D Clone(this Texture2D sourceTexture)
         {
             // Create a temporary RenderTexture of the same size as the texture
@@ -46,7 +46,7 @@ namespace NitroxClient
             texture.Apply();
         }
 
-        //This applies a color filter to a specific region of a 2D texture.
+        // This applies a color filter to a specific region of a 2D texture.
         public static void ApplyFiltersToBlock(
             this Texture2D texture,
             int x,
@@ -64,7 +64,7 @@ namespace NitroxClient
 
         public static void ApplyFiltersToMainTexture(this Material material, params HsvColorFilter[] filters)
         {
-            Texture2D mainTexture = (Texture2D) material.mainTexture;
+            Texture2D mainTexture = (Texture2D)material.mainTexture;
             Texture2D clonedTexture = mainTexture.Clone();
             material.mainTexture = clonedTexture;
             clonedTexture.ApplyFilters(filters);

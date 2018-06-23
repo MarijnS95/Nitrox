@@ -6,7 +6,6 @@ using NitroxModel.MultiplayerSession;
 using NitroxModel.Packets;
 using NitroxModel.Tcp;
 using NitroxServer.GameLogic.Players;
-using static NitroxServer.GameLogic.Players.PlayerData;
 
 namespace NitroxServer.GameLogic
 {
@@ -81,7 +80,7 @@ namespace NitroxServer.GameLogic
                 assetPackage.Player = player;
                 assetPackage.ReservationKey = null;
                 reservations.Remove(reservationKey);
-                
+
                 return player;
             }
         }

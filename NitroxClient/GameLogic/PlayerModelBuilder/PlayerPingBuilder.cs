@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using NitroxClient.GameLogic.PlayerModelBuilder.Abstract;
 using UnityEngine;
@@ -36,7 +35,7 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
             updateEntities.Invoke(pingTab, new object[] { });
 
             FieldInfo pingTabEntriesField = typeof(uGUI_PingTab).GetField("entries", BindingFlags.NonPublic | BindingFlags.Instance);
-            Dictionary<int, uGUI_PingEntry> pingEntries = (Dictionary<int, uGUI_PingEntry>) pingTabEntriesField.GetValue(pingTab);
+            Dictionary<int, uGUI_PingEntry> pingEntries = (Dictionary<int, uGUI_PingEntry>)pingTabEntriesField.GetValue(pingTab);
             uGUI_PingEntry pingEntry = pingEntries[ping.GetInstanceID()];
             pingEntry.icon.color = player.PlayerSettings.PlayerColor;
 
@@ -54,7 +53,7 @@ namespace NitroxClient.GameLogic.PlayerModelBuilder
             uGUI_Pings pings = Object.FindObjectOfType<uGUI_Pings>();
 
             MethodInfo setColor = typeof(uGUI_Pings).GetMethod("OnColor", BindingFlags.NonPublic | BindingFlags.Instance);
-            setColor.Invoke(pings, new object[] {ping.GetInstanceID(), player.PlayerSettings.PlayerColor});
+            setColor.Invoke(pings, new object[] { ping.GetInstanceID(), player.PlayerSettings.PlayerColor });
         }
     }
 }

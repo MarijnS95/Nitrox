@@ -28,6 +28,7 @@ namespace NitroxClient.Communication.Packets.Processors
                     {
                         StoryGoal.Execute(packet.Key, (Story.GoalType)packet.StoryEventType);
                     }
+
                     break;
                 case StoryEventType.Extra:
                     ExecuteExtraEvent(packet.Key);

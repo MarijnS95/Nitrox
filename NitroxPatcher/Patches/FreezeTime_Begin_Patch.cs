@@ -16,6 +16,7 @@ namespace NitroxPatcher.Patches
             {
                 return true;
             }
+
             return false;
         }
 

@@ -88,6 +88,7 @@ namespace NitroxReloader
                 .SelectMany(type => type.GetMethods(ALL_BINDINGS))
                 .Where(IsMarkedReloadable);
         }
+
         private static string QualifiedName(MethodBase method)
         {
             return method.DeclaringType.FullName + '.' + method.Name;
@@ -148,6 +149,7 @@ namespace NitroxReloader
                 original_b[5] = 0xC3;
             }
         }
+
         private static RuntimeMethodHandle GetRuntimeMethodHandle(MethodBase method)
         {
             if (method is DynamicMethod)

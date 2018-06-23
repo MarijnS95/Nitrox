@@ -7,12 +7,12 @@ using NitroxModel.Tcp;
 using NitroxServer.Communication.Packets.Processors;
 using NitroxServer.Communication.Packets.Processors.Abstract;
 using NitroxServer.GameLogic;
-using NitroxServer.GameLogic.Entities;
-using NitroxServer.Serialization.World;
 using NitroxServer.GameLogic.Bases;
-using NitroxServer.GameLogic.Vehicles;
+using NitroxServer.GameLogic.Entities;
 using NitroxServer.GameLogic.Items;
 using NitroxServer.GameLogic.Players;
+using NitroxServer.GameLogic.Vehicles;
+using NitroxServer.Serialization.World;
 
 namespace NitroxServer.Communication.Packets
 {
@@ -26,9 +26,9 @@ namespace NitroxServer.Communication.Packets
 
         public PacketHandler(World world)
         {
-            this.playerManager = world.PlayerManager;
+            playerManager = world.PlayerManager;
             defaultPacketProcessor = new DefaultServerPacketProcessor(playerManager);
-            
+
             Dictionary<Type, object> ProcessorArguments = new Dictionary<Type, object>
             {
                 {typeof(World), world },

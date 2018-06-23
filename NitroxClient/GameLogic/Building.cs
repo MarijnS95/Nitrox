@@ -70,7 +70,7 @@ namespace NitroxClient.GameLogic
             }
 
             timeSinceLastConstructionChangeEvent = 0.0f;
-            
+
             string guid = GuidHelper.GetGuid(gameObject);
 
             if (amount < 0.95f) // Construction complete event handled by function below
@@ -90,7 +90,7 @@ namespace NitroxClient.GameLogic
                 GameObject constructedBase = (GameObject)opConstructedBase.Get();
                 newlyConstructedBaseGuid = Optional<string>.Of(GuidHelper.GetGuid(constructedBase));
             }
-            
+
             string guid = GuidHelper.GetGuid(gameObject);
 
             ConstructionCompleted constructionCompleted = new ConstructionCompleted(guid, newlyConstructedBaseGuid);

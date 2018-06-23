@@ -75,7 +75,7 @@ namespace NitroxClient.GameLogic.PlayerPreferences
 
             return Equals((PlayerPreference)obj);
         }
-        
+
         public override int GetHashCode()
         {
             unchecked
@@ -89,12 +89,12 @@ namespace NitroxClient.GameLogic.PlayerPreferences
         }
     }
 
-    //LitJson does not seem to be capable of ignoring certain properties.
+    // LitJson does not seem to be capable of ignoring certain properties.
     public static class PlayerPreferenceExtensions
     {
         public static Color PreferredColor(this PlayerPreference playerPreference)
         {
             return new Color(playerPreference.RedAdditive, playerPreference.GreenAdditive, playerPreference.BlueAdditive);
-        } 
+        }
     }
 }

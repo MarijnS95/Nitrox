@@ -1,7 +1,7 @@
-﻿using NitroxModel.DataStructures.GameLogic;
-using NitroxServer.GameLogic.Entities.Spawning;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using NitroxModel.DataStructures.GameLogic;
+using NitroxServer.GameLogic.Entities.Spawning;
 using UnityEngine;
 
 namespace NitroxServer.GameLogic.Entities
@@ -25,8 +25,8 @@ namespace NitroxServer.GameLogic.Entities
 
             foreach (AbsoluteEntityCell cell in cells)
             {
-                List<Entity> cellEntities = entityData.GetEntities(cell);                
-                entities.AddRange(cellEntities.Where(entity => cell.Level <= entity.Level));                                
+                List<Entity> cellEntities = entityData.GetEntities(cell);
+                entities.AddRange(cellEntities.Where(entity => cell.Level <= entity.Level));
             }
 
             return entities;
@@ -54,7 +54,7 @@ namespace NitroxServer.GameLogic.Entities
         {
             IEnumerable<Int3> distinctBatchIds = cells.Select(cell => cell.BatchId).Distinct();
 
-            foreach(Int3 batchId in distinctBatchIds)
+            foreach (Int3 batchId in distinctBatchIds)
             {
                 List<Entity> spawnedEntities = batchEntitySpawner.LoadUnspawnedEntities(batchId);
                 entityData.AddEntities(spawnedEntities);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace NitroxClient.MonoBehaviours.Gui.MainMenu
 {
-    //I'd like to see about skinning this behavior with the notification window that appears at the bottom of the screen during certain story events in the game.
+    // I'd like to see about skinning this behavior with the notification window that appears at the bottom of the screen during certain story events in the game.
     public class MainMenuNotification : MonoBehaviour
     {
         private bool awaitingAcknowledgement;

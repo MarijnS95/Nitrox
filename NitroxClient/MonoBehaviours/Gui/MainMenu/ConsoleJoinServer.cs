@@ -37,7 +37,7 @@ namespace NitroxClient.MonoBehaviours.Gui.MainMenu
 
         public void OnConsoleCommand_mplayer(NotificationCenter.Notification n)
         {
-            //This could be cleaned up. Honestly, I see this as a hack to deal with other unimplemented features. I'd rather just patch this boat until we can let it sink...
+            // This could be cleaned up. Honestly, I see this as a hack to deal with other unimplemented features. I'd rather just patch this boat until we can let it sink...
             NitroxServiceLocator.BeginNewLifetimeScope();
             multiplayerSession = NitroxServiceLocator.LocateService<IMultiplayerSession>();
 

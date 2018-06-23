@@ -15,7 +15,7 @@ namespace NitroxTest.Client.PlayerPreferences
         [TestMethod]
         public void ShouldBeAbleToRetrieveANewPreferenceEntry()
         {
-            //Given
+            // Given
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -27,11 +27,11 @@ namespace NitroxTest.Client.PlayerPreferences
             PlayerPreference playerPreference = new PlayerPreference(TestConstants.TEST_PLAYER_NAME, RandomColorGenerator.GenerateColor());
             Color preferredColor = playerPreference.PreferredColor();
 
-            //When
+            // When
             playerPreferenceManager.SetPreference(TestConstants.TEST_IP_ADDRESS, playerPreference);
             PlayerPreference result = playerPreferenceManager.GetPreference(TestConstants.TEST_IP_ADDRESS);
 
-            //Then
+            // Then
             result.PlayerName.Should().Be(TestConstants.TEST_PLAYER_NAME);
             result.RedAdditive.Should().Be(preferredColor.r);
             result.GreenAdditive.Should().Be(preferredColor.g);
@@ -41,7 +41,7 @@ namespace NitroxTest.Client.PlayerPreferences
         [TestMethod]
         public void ShouldBeAbleToRetrieveUpdatedPreferencesForAnExistingIpAddress()
         {
-            //Given
+            // Given
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -55,12 +55,12 @@ namespace NitroxTest.Client.PlayerPreferences
             Color newColor = RandomColorGenerator.GenerateColor();
             PlayerPreference newPlayerPreference = new PlayerPreference(TestConstants.TEST_PLAYER_NAME, newColor);
 
-            //When
+            // When
             playerPreferenceManager.SetPreference(TestConstants.TEST_IP_ADDRESS, playerPreference);
             playerPreferenceManager.SetPreference(TestConstants.TEST_IP_ADDRESS, newPlayerPreference);
             PlayerPreference result = playerPreferenceManager.GetPreference(TestConstants.TEST_IP_ADDRESS);
 
-            //Then
+            // Then
             result.RedAdditive.Should().Be(newColor.r);
             result.GreenAdditive.Should().Be(newColor.g);
             result.BlueAdditive.Should().Be(newColor.b);
@@ -69,7 +69,7 @@ namespace NitroxTest.Client.PlayerPreferences
         [TestMethod]
         public void SetPreferenceShouldThrowExceptionWhenGivenANullIpAddress()
         {
-            //Arrange
+            // Arrange
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -80,17 +80,17 @@ namespace NitroxTest.Client.PlayerPreferences
 
             PlayerPreference playerPreference = new PlayerPreference(TestConstants.TEST_PLAYER_NAME, RandomColorGenerator.GenerateColor());
 
-            //Act
+            // Act
             Action action = () => playerPreferenceManager.SetPreference(null, playerPreference);
 
-            //Assert
+            // Assert
             action.ShouldThrow<ArgumentNullException>();
         }
 
         [TestMethod]
         public void SetPreferenceShouldThrowExceptionWhenGivenANullJoinServerSettingsReference()
         {
-            //Arrange
+            // Arrange
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -99,17 +99,17 @@ namespace NitroxTest.Client.PlayerPreferences
 
             PlayerPreferenceManager playerPreferenceManager = new PlayerPreferenceManager(stateProvider);
 
-            //Act
+            // Act
             Action action = () => playerPreferenceManager.SetPreference(TestConstants.TEST_IP_ADDRESS, null);
 
-            //Assert
+            // Assert
             action.ShouldThrow<ArgumentNullException>();
         }
 
         [TestMethod]
         public void ShouldGetTheLastSetPlayerPreferenceWhenJoiningANewServer()
         {
-            //Given
+            // Given
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -134,10 +134,10 @@ namespace NitroxTest.Client.PlayerPreferences
             string thirdIpAddress = "000.000.000.000";
             playerPreferenceManager.SetPreference(thirdIpAddress, thirdPreference);
 
-            //When
+            // When
             PlayerPreference result = playerPreferenceManager.GetPreference(TestConstants.TEST_IP_ADDRESS);
 
-            //Then
+            // Then
             result.PlayerName.Should().Be(thirdPreference.PlayerName);
             result.RedAdditive.Should().Be(expectedColor.r);
             result.GreenAdditive.Should().Be(expectedColor.g);
@@ -147,7 +147,7 @@ namespace NitroxTest.Client.PlayerPreferences
         [TestMethod]
         public void ShouldBeAbleToRetrieveADefaultPreferenceWhenThePlayerHasNone()
         {
-            //Given
+            // Given
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -156,10 +156,10 @@ namespace NitroxTest.Client.PlayerPreferences
 
             PlayerPreferenceManager playerPreferenceManager = new PlayerPreferenceManager(stateProvider);
 
-            //When
+            // When
             PlayerPreference result = playerPreferenceManager.GetPreference(TestConstants.TEST_IP_ADDRESS);
 
-            //Then
+            // Then
             result.Should().NotBeNull();
             result.PlayerName.Should().BeNullOrEmpty();
         }
@@ -167,7 +167,7 @@ namespace NitroxTest.Client.PlayerPreferences
         [TestMethod]
         public void GetPreferenceShouldThrowExceptionWhenGivenNullIpAddress()
         {
-            //Arrange
+            // Arrange
             PlayerPreferenceState playerPreferenceState = new PlayerPreferenceState();
             playerPreferenceState.Preferences = new Dictionary<string, PlayerPreference>();
 
@@ -176,10 +176,10 @@ namespace NitroxTest.Client.PlayerPreferences
 
             PlayerPreferenceManager playerPreferenceManager = new PlayerPreferenceManager(stateProvider);
 
-            //Act
+            // Act
             Action action = () => playerPreferenceManager.GetPreference(null);
 
-            //Assert
+            // Assert
             action.ShouldThrow<ArgumentNullException>();
         }
     }

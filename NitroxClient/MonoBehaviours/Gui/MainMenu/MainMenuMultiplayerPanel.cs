@@ -25,8 +25,8 @@ namespace NitroxClient.MonoBehaviours.Gui.MainMenu
 
         public void Awake()
         {
-            //This sucks, but the only way around it is to establish a Subnautica resources cache and reference it everywhere we need it.
-            //Given recent push-back on elaborate designs, I've just crammed it here until we can all get on the same page as far as code-quality standars are concerned.
+            // This sucks, but the only way around it is to establish a Subnautica resources cache and reference it everywhere we need it.
+            // Given recent push-back on elaborate designs, I've just crammed it here until we can all get on the same page as far as code-quality standars are concerned.
             JoinServer.SaveGameMenuPrototype = SavedGamesRef;
 
             multiplayerButton = SavedGamesRef.RequireGameObject("Scroll View/Viewport/SavedGameAreaContent/NewGame");

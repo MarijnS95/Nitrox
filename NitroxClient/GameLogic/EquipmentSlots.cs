@@ -1,11 +1,11 @@
-﻿using NitroxClient.Communication.Abstract;
+﻿using System.Collections.Generic;
+using NitroxClient.Communication.Abstract;
 using NitroxClient.GameLogic.Helper;
 using NitroxClient.Unity.Helper;
 using NitroxModel.DataStructures.GameLogic;
-using NitroxModel.Packets;
-using System.Collections.Generic;
-using UnityEngine;
 using NitroxModel.Helper;
+using NitroxModel.Packets;
+using UnityEngine;
 
 namespace NitroxClient.GameLogic
 {
@@ -24,7 +24,7 @@ namespace NitroxClient.GameLogic
             string itemGuid = GuidHelper.GetGuid(pickupable.gameObject);
             byte[] bytes = SerializationHelper.GetBytes(pickupable.gameObject);
 
-            EquippedItemData equippedItem = new EquippedItemData(ownerGuid, itemGuid, bytes,slot);
+            EquippedItemData equippedItem = new EquippedItemData(ownerGuid, itemGuid, bytes, slot);
             EquipmentAddItem equipPacket = new EquipmentAddItem(equippedItem);
             packetSender.Send(equipPacket);
         }
@@ -41,7 +41,7 @@ namespace NitroxClient.GameLogic
         public void AddItems(List<EquippedItemData> equippedItems)
         {
             ItemsContainer container = Inventory.Get().container;
-            
+
             foreach (EquippedItemData equippedItem in equippedItems)
             {
                 GameObject item = SerializationHelper.GetGameObject(equippedItem.SerializedData);
