@@ -30,8 +30,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.3.5.2\lib\net40\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="LitJson">
-      <HintPath>$(SubnauticaManaged)\LitJson.dll</HintPath>
+    <Reference Include="LitJSON, Version=0.16.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\LitJson.0.16.0\lib\net40\LitJSON.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>..\Nitrox.Subnautica.Assets\protobuf-net.dll</HintPath>
