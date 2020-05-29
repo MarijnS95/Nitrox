@@ -28,9 +28,11 @@ jobs:
         sudo apt install mono-complete nuget
 
     # TODO: depotdownloader
-    # - name: Download Subnautica files (Mono)
-    #   if: runner.os == 'Linux'
-    #   run: mono ./.github/depotDownloader/QXCTF.exe
+    - uses: actions/setup-dotnet@v1
+      if: runner.os == 'Linux'
+    - name: Download Subnautica files (DotNet)
+      if: runner.os == 'Linux'
+      run: dotnet ./.github/depotDownloader/QXCTF.exe
 
     ########## Windows Setup ##########
     - name: Download Subnautica files
