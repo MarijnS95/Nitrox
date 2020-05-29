@@ -3,21 +3,22 @@ name: Building Nitrox Pull Request
 on: [push, pull_request]
 
 jobs:
-  # setup-repo:
-  #   runs-on: [ubuntu-latest, windows-latest]
-  #   if: github.event.pull_request.draft == false
-
-  #   steps:
-  #   - name: Checking out repository
-  #     uses: actions/checkout@v2
-  #     with:
-  #       submodules: 'true'
-
-  setup-linux:
-    runs-on: ubuntu-latest
-    # if: runner.os == 'Linux'
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    if: github.event.pull_request.draft == false
     steps:
+
+    - name: Checking out repository
+      uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+
+    ########## Ubuntu Setup ##########
     - name: Install mono
+      if: runner.os == 'Linux'
       run: |
         sudo apt update
         sudo apt install dirmngr gnupg apt-transport-https ca-certificates
@@ -25,41 +26,26 @@ jobs:
         sudo sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" > /etc/apt/sources.list.d/mono-official-stable.list'
         sudo apt update
         sudo apt install mono-complete nuget
-    - name: Checking out repository
-      uses: actions/checkout@v2
-      with:
-        submodules: 'true'
+
     # TODO: depotdownloader
     # - name: Download Subnautica files (Mono)
+    #   if: runner.os == 'Linux'
     #   run: mono ./.github/depotDownloader/QXCTF.exe
 
-  setup-windows:
-    # needs: setup-repo
-    runs-on: windows-latest
-    # if: runner.os == 'Windows'
-    steps:
-    - name: Checking out repository
-      uses: actions/checkout@v2
-      with:
-        submodules: 'true'
+    ########## Windows Setup ##########
     - name: Download Subnautica files
+      if: runner.os == 'Windows'
       run: ./.github/depotDownloader/QXCTF.exe
     - name: Setup Nuget.exe
+      if: runner.os == 'Windows'
       uses: warrenbuckley/Setup-Nuget@v1
-    - name: Restore packages
-      run: nuget restore Nitrox.sln
     - name: Setup MSBuild
+      if: runner.os == 'Windows'
       uses: warrenbuckley/Setup-MSBuild@v1
 
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    needs: [setup-linux, setup-windows]
-    if: github.event.pull_request.draft == false
-
-    steps:
+    ########## Run the build (cross-platform) ##########
+    - name: Restore packages
+      run: nuget restore Nitrox.sln
     - name: Build with MSBuild
       run: msbuild Nitrox.sln -p:Configuration=Release
     - name: Uploading zipped launcher
