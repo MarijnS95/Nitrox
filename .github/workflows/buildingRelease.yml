@@ -1,6 +1,6 @@
 name: Building Nitrox Release
 
-on: [master]
+on: [pull_request]
 
 jobs:
   build:
