@@ -1,11 +1,11 @@
 name: Building Nitrox Release
 
-on: push
+on: [master]
 
 jobs:
   build:
     runs-on: windows-latest
-    
+
     steps:
     - name: Checking out repository
       uses: actions/checkout@v2
