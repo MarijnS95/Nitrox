@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "YTUDDExecutor-DNC/1.0.0": {
+        "dependencies": {
+          "YTUDD": "1.0.0.0"
+        },
+        "runtime": {
+          "YTUDDExecutor-DNC.dll": {}
+        }
+      },
+      "YTUDD/1.0.0.0": {
+        "runtime": {
+          "YTUDD.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "YTUDDExecutor-DNC/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "YTUDD/1.0.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

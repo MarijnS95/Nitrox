@@ -32,7 +32,7 @@ jobs:
       if: runner.os == 'Linux'
     - name: Download Subnautica files (DotNet)
       if: runner.os == 'Linux'
-      run: dotnet ./.github/depotDownloader/QXCTF.exe
+      run: dotnet ./.github/ytudd/YTUDDExecutor-DNC.exe
 
     ########## Windows Setup ##########
     - name: Download Subnautica files
