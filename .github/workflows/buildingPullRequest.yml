@@ -3,18 +3,21 @@ name: Building Nitrox Pull Request
 on: [push, pull_request]
 
 jobs:
-  build:
-    # runs-on: [ubuntu-latest, windows-latest]
-    runs-on: ubuntu-latest
-    # strategy:
-    #   # Run Ubuntu first, before jumping to Windows
-    #   # This is twice as cheap and will catch slightly more errors (capitalization of filenames...)
-    #   max-parallel: 1
-    if: github.event.pull_request.draft == false
+  # setup-repo:
+  #   runs-on: [ubuntu-latest, windows-latest]
+  #   if: github.event.pull_request.draft == false
 
+  #   steps:
+  #   - name: Checking out repository
+  #     uses: actions/checkout@v2
+  #     with:
+  #       submodules: 'true'
+
+  setup-linux:
+    runs-on: ubuntu-latest
+    # if: runner.os == 'Linux'
     steps:
     - name: Install mono
-      if: runner.os == 'Linux'
       run: |
         sudo apt update
         sudo apt install dirmngr gnupg apt-transport-https ca-certificates
@@ -22,25 +25,41 @@ jobs:
         sudo sh -c 'echo "deb https://download.mono-project.com/repo/ubuntu stable-bionic main" > /etc/apt/sources.list.d/mono-official-stable.list'
         sudo apt update
         sudo apt install mono-complete nuget
-
     - name: Checking out repository
       uses: actions/checkout@v2
       with:
         submodules: 'true'
-    # - name: Download Subnautica files
-    #   if: runner.os != 'Linux'
-    #   run: ./.github/depotDownloader/QXCTF.exe
+    # TODO: depotdownloader
     # - name: Download Subnautica files (Mono)
     #   run: mono ./.github/depotDownloader/QXCTF.exe
-    #   if: runner.os == 'Linux'
+
+  setup-windows:
+    # needs: setup-repo
+    runs-on: windows-latest
+    # if: runner.os == 'Windows'
+    steps:
+    - name: Checking out repository
+      uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+    - name: Download Subnautica files
+      run: ./.github/depotDownloader/QXCTF.exe
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-      if: runner.os != 'Linux'
     - name: Restore packages
       run: nuget restore Nitrox.sln
     - name: Setup MSBuild
       uses: warrenbuckley/Setup-MSBuild@v1
-      if: runner.os != 'Linux'
+
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    needs: [setup-linux, setup-windows]
+    if: github.event.pull_request.draft == false
+
+    steps:
     - name: Build with MSBuild
       run: msbuild Nitrox.sln -p:Configuration=Release
     - name: Uploading zipped launcher
